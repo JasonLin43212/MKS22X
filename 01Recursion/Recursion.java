@@ -47,4 +47,18 @@ public class Recursion{
     }
     return sqrtHelper(n,(n/guess+guess)/2);
   }
+
+  public boolean isPossible(int n, int target){
+    if (n<0) {
+      throw new IllegalArgumentException();
+    }
+    return isPossibleHelper(n,target,0);
+  }
+
+  public boolean isPossibleHelper(int n, int target, int sum){
+    if (n == 0) {
+      return target == sum;
+    }
+    return isPossibleHelper(n-1,target,sum+n) || isPossibleHelper(n-1,target,sum);
+  }
 }
