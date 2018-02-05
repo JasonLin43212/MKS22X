@@ -5,6 +5,12 @@ public class Recursion{
     System.out.println(r.fact(6));
     System.out.println(r.fib(7));
     System.out.println(r.sqrt(3));
+
+    System.out.println(r.isPossible(3,5));
+    System.out.println(r.isPossible(3,6));
+    System.out.println(r.isPossible(3,7));
+    System.out.println(r.isPossible(4,5));
+    System.out.println(r.isPossible(4,9));
   }
 
   public int fact(int n) {
