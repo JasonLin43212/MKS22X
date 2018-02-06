@@ -10,7 +10,7 @@ public class Recursion{
     System.out.println(r.isPossible(3,6));
     System.out.println(r.isPossible(3,7));
     System.out.println(r.isPossible(4,5));
-    System.out.println(r.isPossible(4,9));
+    System.out.println(r.isPossible(4,11));
   }
 
   public int fact(int n) {
@@ -54,6 +54,7 @@ public class Recursion{
     return sqrtHelper(n,(n/guess+guess)/2);
   }
 
+  /*
   public boolean isPossible(int n, int target){
     if (n<0) {
       throw new IllegalArgumentException();
@@ -66,5 +67,16 @@ public class Recursion{
       return target == sum;
     }
     return isPossibleHelper(n-1,target,sum+n) || isPossibleHelper(n-1,target,sum);
+  }
+  */
+
+  public boolean isPossible(int n, int target){
+    if (n<0) {
+      throw new IllegalArgumentException();
+    }
+    if (n == 0) {
+      return target == 0;
+    }
+    return isPossible(n-1,target-n) || isPossible(n-1,target);
   }
 }
