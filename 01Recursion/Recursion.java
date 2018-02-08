@@ -6,11 +6,11 @@ public class Recursion{
     System.out.println(r.fib(7));
     System.out.println(r.sqrt(3));
 
-    System.out.println(r.isPossible(3,5));
-    System.out.println(r.isPossible(3,6));
-    System.out.println(r.isPossible(3,7));
-    System.out.println(r.isPossible(4,5));
-    System.out.println(r.isPossible(4,11));
+    System.out.println(r.canMakeSum(3,5));
+    System.out.println(r.canMakeSum(3,6));
+    System.out.println(r.canMakeSum(3,7));
+    System.out.println(r.canMakeSum(4,5));
+    System.out.println(r.canMakeSum(4,11));
   }
 
   public int fact(int n) {
@@ -55,28 +55,28 @@ public class Recursion{
   }
 
   /*
-  public boolean isPossible(int n, int target){
+  public boolean canMakeSum(int n, int target){
     if (n<0) {
       throw new IllegalArgumentException();
     }
-    return isPossibleHelper(n,target,0);
+    return canMakeSumHelper(n,target,0);
   }
 
-  public boolean isPossibleHelper(int n, int target, int sum){
+  public boolean canMakeSumHelper(int n, int target, int sum){
     if (n == 0) {
       return target == sum;
     }
-    return isPossibleHelper(n-1,target,sum+n) || isPossibleHelper(n-1,target,sum);
+    return canMakeSumHelper(n-1,target,sum+n) || canMakeSumHelper(n-1,target,sum);
   }
   */
 
-  public boolean isPossible(int n, int target){
+  public boolean canMakeSum(int n, int target){
     if (n<0) {
       throw new IllegalArgumentException();
     }
     if (n == 0) {
       return target == 0;
     }
-    return isPossible(n-1,target-n) || isPossible(n-1,target);
+    return canMakeSum(n-1,target-n) || canMakeSum(n-1,target);
   }
 }
