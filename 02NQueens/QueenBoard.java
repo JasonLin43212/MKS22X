@@ -3,7 +3,7 @@ import java.util.*;
 public class QueenBoard{
 
   public static void main(String[]args){
-    QueenBoard q = new QueenBoard(4);
+    QueenBoard q = new QueenBoard(5);
     System.out.println(q.solve());
     System.out.println(q);
 
@@ -67,13 +67,8 @@ public class QueenBoard{
         if (board[r][c] == -1){
           output += "Q ";
         }
-        /*
         else {
           output += "_ ";
-        }
-        */
-        else {
-          output += board[r][c] + " ";
         }
       }
       output += "\n";
@@ -109,12 +104,11 @@ public class QueenBoard{
         }
       }
     }
-    if (column == size -1){
-      if (addQueen(row,column)){
-        return true;
-      }
-      return solveHelper(row+1,column);
+
+    if (column == size){
+      return true;
     }
+
     if (addQueen(row,column)){
       return solveHelper(0,column+1);
     }
