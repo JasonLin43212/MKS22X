@@ -5,6 +5,7 @@ public class QueenBoard{
   public static void main(String[]args){
     QueenBoard q = new QueenBoard(7);
     System.out.println(q.countSolutions());
+    System.out.println(q.solve());
     System.out.println(q);
   }
 
