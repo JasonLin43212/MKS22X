@@ -2,14 +2,13 @@ import java.util.*;
 
 public class QueenBoard{
 
-  /*
   public static void main(String[]args){
-    QueenBoard q = new QueenBoard(15);
-    System.out.println(q.countSolutions());
-    //System.out.println(q.solve());
+    QueenBoard q = new QueenBoard(8);
+    //System.out.println(q.countSolutions());
+    System.out.println(q.solve());
     System.out.println(q);
   }
-  */
+  /*
   public static void main(String[] args){
     QueenBoard b = new QueenBoard(4);
 
@@ -39,11 +38,12 @@ public class QueenBoard{
                   3 --> 0                      9 --> 352
                   4 --> 2                    10 --> 724
                   5 --> 10                  11 --> 2680
-      */
+    */
+    /*
       System.out.println(a); //prints out an empty i by i grid of underscores
     }
   }
-
+*/
   private int[][] board;
   private int size;
 
@@ -59,18 +59,15 @@ public class QueenBoard{
     if (board[r][c] > 0){
       return false;
     }
-    board[r][c] = -1;
-    //Straight to the right
-    for (int i=c+1; i<size; i++){
-      board[r][i]++;
-    }
-    //Diagonal down
-    for (int i=1; r+i<size && c+i<size; i++){
-      board[r+i][c+i]++;
-    }
-    //Diagonal up
-    for (int i=1; r-i>=0 && c+i<size; i++){
-      board[r-i][c+i]++;
+    board[r][c]=-1;
+    for (int i=1; c+i<size; i++){
+	board[r][c+i]++;
+	if (r+i<size){
+	    board[r+i][c+i]++;
+	}
+	if (r-i>=0){
+	    board[r-i][c+i]++;
+	}
     }
     return true;
   }
@@ -80,17 +77,14 @@ public class QueenBoard{
       return false;
     }
     board[r][c]++;
-    //Straigh to the right
-    for (int i=c+1; i<size; i++){
-      board[r][i]--;
-    }
-    //Diagonal down
-    for (int i=1; r+i<size && c+i<size; i++){
-      board[r+i][c+i]--;
-    }
-    //Diagonal Up
-    for (int i=1; r-i>=0 && c+i<size; i++){
-      board[r-i][c+i]--;
+    for (int i=1; c+i<size; i++){
+	board[r][c+i]--;
+	if (r+i<size){
+	    board[r+i][c+i]--;
+	}
+	if (r-i>=0){
+	    board[r-i][c+i]--;
+	}
     }
     return true;
   }
@@ -181,12 +175,8 @@ public class QueenBoard{
     for (int row = 0; row<size; row++){
       //Check if you can add a queen there
       if (addQueen(row,column)){
-        //Check if the next column can be added to
-        //Once it reaches the last column, the number of solutions will add up
-        int returnedNumber = countSolutionsHelper(column+1);
-        if (returnedNumber != 0){
-          numSolutions += returnedNumber;
-        }
+        //Adds the number of solutions for the next column
+        numSolutions += countSolutionsHelper(column+1);
         //If you are not able to add to the last column from this point
         //remove the queen you just added and try the next one
         removeQueen(row,column);
