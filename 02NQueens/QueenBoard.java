@@ -2,6 +2,7 @@ import java.util.*;
 
 public class QueenBoard{
 
+  /*
   public static void main(String[]args){
     QueenBoard q = new QueenBoard(10);
     System.out.println(q.countSolutions());
@@ -9,9 +10,10 @@ public class QueenBoard{
     //System.out.println(q.solvePrint());
     System.out.println(q);
   }
-  /*
+  */
+
   public static void main(String[] args){
-    QueenBoard b = new QueenBoard(4);
+    QueenBoard b = new QueenBoard(30);
 
     System.out.println(b.solve()); //prints true
     System.out.println(b); //prints a valid solution
@@ -40,11 +42,11 @@ public class QueenBoard{
                   4 --> 2                    10 --> 724
                   5 --> 10                  11 --> 2680
     */
-    /*
+
       System.out.println(a); //prints out an empty i by i grid of underscores
     }
   }
-*/
+
   private int[][] board;
   private int size;
 
