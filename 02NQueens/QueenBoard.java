@@ -2,16 +2,14 @@ import java.util.*;
 
 public class QueenBoard{
 
-  /*
   public static void main(String[]args){
-    QueenBoard q = new QueenBoard(10);
-    System.out.println(q.countSolutions());
+    QueenBoard q = new QueenBoard(8);
+    //System.out.println(q.countSolutions());
     //System.out.println(q.solve());
-    //System.out.println(q.solvePrint());
+    System.out.println(q.solvePrint());
     System.out.println(q);
   }
-  */
-
+  /*
   public static void main(String[] args){
     QueenBoard b = new QueenBoard(30);
 
@@ -42,11 +40,11 @@ public class QueenBoard{
                   4 --> 2                    10 --> 724
                   5 --> 10                  11 --> 2680
     */
-
+  /*
       System.out.println(a); //prints out an empty i by i grid of underscores
     }
   }
-
+  */
   private int[][] board;
   private int size;
 
@@ -188,40 +186,40 @@ public class QueenBoard{
     return numSolutions;
   }
 
-    public boolean solvePrint(){
-	for (int r=0; r<size; r++){
+  public boolean solvePrint(){
+    for (int r=0; r<size; r++){
 	    for (int c=0; c<size; c++) {
-		if (board[r][c] != 0){
-		    throw new IllegalStateException();
-		}
+        if (board[r][c] != 0){
+          throw new IllegalStateException();
+        }
 	    }
-	}
-	System.out.println(Text.CLEAR_SCREEN);
-	return solvePrintHelper(0);
     }
+    System.out.println(Text.CLEAR_SCREEN);
+    return solvePrintHelper(0);
+  }
 
-    private boolean solvePrintHelper(int column){
-	//Once the column reaches beyond the board, you know it was able to add to the last column
-	if (column == size){
+  private boolean solvePrintHelper(int column){
+    //Once the column reaches beyond the board, you know it was able to add to the last column
+    if (column == size){
 	    return true;
-	}
-	for (int row = 0; row<size; row++){
+    }
+    for (int row = 0; row<size; row++){
 	    //Check if you can add a queen there
 	    if (addQueen(row,column)){
-		System.out.println(Text.go(1,1) + this);
-		Text.wait(100);
-		//Check if the next column can be added to
-		//Once it reaches the last column, the true will carry over
-		if (solvePrintHelper(column+1)){
-		    return true;
-		}
-		//If you are not able to add to the last column from this point
-		//remove the queen you just added and try the next one
-		removeQueen(row,column);
-		System.out.println(Text.go(1,1) + this);
-		Text.wait(100);
+        System.out.println(Text.go(1,1) + this);
+        Text.wait(40);
+        //Check if the next column can be added to
+        //Once it reaches the last column, the true will carry over
+        if (solvePrintHelper(column+1)){
+          return true;
+        }
+        //If you are not able to add to the last column from this point
+        //remove the queen you just added and try the next one
+        removeQueen(row,column);
+        System.out.println(Text.go(1,1) + this);
+        Text.wait(40);
 	    }
-	}
-	return false;
     }
+    return false;
+  }
 }
