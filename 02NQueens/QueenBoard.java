@@ -10,40 +10,40 @@ public class QueenBoard{
     System.out.println(q);
   }
   /*
-  public static void main(String[] args){
+    public static void main(String[] args){
     QueenBoard b = new QueenBoard(30);
 
     System.out.println(b.solve()); //prints true
     System.out.println(b); //prints a valid solution
 
     try{
-      b.solve();
+    b.solve();
     }catch(IllegalStateException e){
-      System.out.println("Error: The board contains non-zero values");
+    System.out.println("Error: The board contains non-zero values");
     } //prints "Error: The board contains non-zero values"
 
     try{
-      b.countSolutions();
+    b.countSolutions();
     }catch(IllegalStateException e){
-      System.out.println("Error: The board contains non-zero values");
+    System.out.println("Error: The board contains non-zero values");
     } //prints "Error: The board contains non-zero values"
 
     for (int i = 0; i < 12; i++){
-      QueenBoard a = new QueenBoard(i);
-      System.out.println("# of Solutions for " + i + ": " + a.countSolutions());
-      /*          Expected Values
-                  i --> # of Solutions   i --> # of Solutions
-                  0 --> 1                      6 --> 4
-                  1 --> 1                      7 --> 40
-                  2 --> 0                      8 --> 92
-                  3 --> 0                      9 --> 352
-                  4 --> 2                    10 --> 724
-                  5 --> 10                  11 --> 2680
-    */
+    QueenBoard a = new QueenBoard(i);
+    System.out.println("# of Solutions for " + i + ": " + a.countSolutions());
+    /*          Expected Values
+    i --> # of Solutions   i --> # of Solutions
+    0 --> 1                      6 --> 4
+    1 --> 1                      7 --> 40
+    2 --> 0                      8 --> 92
+    3 --> 0                      9 --> 352
+    4 --> 2                    10 --> 724
+    5 --> 10                  11 --> 2680
+  */
   /*
-      System.out.println(a); //prints out an empty i by i grid of underscores
+    System.out.println(a); //prints out an empty i by i grid of underscores
     }
-  }
+    }
   */
   private int[][] board;
   private int size;
@@ -62,13 +62,13 @@ public class QueenBoard{
     }
     board[r][c]=-1;
     for (int i=1; c+i<size; i++){
-	board[r][c+i]++;
-	if (r+i<size){
-	    board[r+i][c+i]++;
-	}
-	if (r-i>=0){
-	    board[r-i][c+i]++;
-	}
+      board[r][c+i]++;
+      if (r+i<size){
+        board[r+i][c+i]++;
+      }
+      if (r-i>=0){
+        board[r-i][c+i]++;
+      }
     }
     return true;
   }
@@ -79,26 +79,26 @@ public class QueenBoard{
     }
     board[r][c]++;
     for (int i=1; c+i<size; i++){
-	board[r][c+i]--;
-	if (r+i<size){
-	    board[r+i][c+i]--;
-	}
-	if (r-i>=0){
-	    board[r-i][c+i]--;
-	}
+      board[r][c+i]--;
+      if (r+i<size){
+        board[r+i][c+i]--;
+      }
+      if (r-i>=0){
+        board[r-i][c+i]--;
+      }
     }
     return true;
   }
 
   /**
-  *@return The output string formatted as follows:
-  *All numbers that represent queens are replaced with 'Q'
-  *all others are displayed as underscores '_'
-  *There are spaces between each symbol:
-  *Q _ _ _
-  *_ _ Q _
-  * etc.
-  */
+   *@return The output string formatted as follows:
+   *All numbers that represent queens are replaced with 'Q'
+   *all others are displayed as underscores '_'
+   *There are spaces between each symbol:
+   *Q _ _ _
+   *_ _ Q _
+   * etc.
+   */
   public String toString() {
     String output = "";
     for (int r=0;r<size;r++){
@@ -116,10 +116,10 @@ public class QueenBoard{
   }
 
   /**
-  *@return false when the board is not solveable and leaves the board filled with zeros;
-  *        true when the board is solveable, and leaves the board in a solved state
-  *@throws IllegalStateException when the board starts with any non-zero value
-  */
+   *@return false when the board is not solveable and leaves the board filled with zeros;
+   *        true when the board is solveable, and leaves the board in a solved state
+   *@throws IllegalStateException when the board starts with any non-zero value
+   */
   public boolean solve(){
     for (int r=0; r<size; r++){
       for (int c=0; c<size; c++) {
@@ -153,9 +153,9 @@ public class QueenBoard{
   }
 
   /**
-  *@return the number of solutions found, and leaves the board filled with only 0's
-  *@throws IllegalStateException when the board starts with any non-zero value
-  */
+   *@return the number of solutions found, and leaves the board filled with only 0's
+   *@throws IllegalStateException when the board starts with any non-zero value
+   */
   public int countSolutions(){
     for (int r=0; r<size; r++){
       for (int c=0; c<size; c++) {
