@@ -1,7 +1,7 @@
 public class KnightBoard {
 
     public static void main(String[]args){
-	KnightBoard k = new KnightBoard(4,6);
+	KnightBoard k = new KnightBoard(6,6);
 	System.out.println(k);
     }
 
@@ -11,6 +11,9 @@ public class KnightBoard {
     private int[][] knightMoves = {{1,2},{2,1},{1,-2},{2,-1},{-1,2},{-2,1},{-1,-2},{-2,-1}};
     
     public KnightBoard(int startingRows,int startingCols){
+	if (startingRows < 0 || startingCols < 0){
+	    throw new IllegalArgumentException(); 
+	}
 	board = new int[startingRows][startingCols];
 	row = startingRows;
 	col = startingCols;
