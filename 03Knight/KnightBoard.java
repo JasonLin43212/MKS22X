@@ -21,14 +21,14 @@ public class KnightBoard {
 	for (int i=0; i<row; i++){
 	    for (int j=0; j<col; j++){
 		if (board[i][j]==0){
-		    output += "_ ";
+		    output += "__ ";
 		}
 		else if (row * col > 9) {
 		    if (board[i][j] < 10){
-			output += board[i][j];
+			output += board[i][j] + " ";
 		    }
 		    else {
-			output += " " + board[i][j];
+			output += " " + board[i][j] + " ";
 		    }
 		}
 	    }
