@@ -36,4 +36,6 @@ public class KnightBoard {
 	}
 	return output;
     }
+
+    
 }
