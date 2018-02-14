@@ -1,8 +1,9 @@
 public class KnightBoard {
 
   public static void main(String[]args){
-    KnightBoard k = new KnightBoard(6,7);
-    k.solve(3,2);
+    KnightBoard k = new KnightBoard(4,6);
+    //k.solve(3,2);
+    System.out.println(k.countSolutions(0,0));
     System.out.println(k);
   }
 
@@ -50,11 +51,7 @@ public class KnightBoard {
         }
       }
     }
-    if (solveHelper(startingRow, startingCol, 1)){
-      return true;
-    }
-    board[startingRow][startingCol] = 0;
-    return false;
+    return solveHelper(startingRow, startingCol, 1);
   }
   
   private boolean solveHelper(int row, int col, int level){
@@ -78,7 +75,40 @@ public class KnightBoard {
         board[newRow][newCol] = 0;
       }
     }
+    board[row][col] = 0;
     return false;
+  }
+
+  public int countSolutions(int startingRow, int startingCol){
+    if (isOutOfRange(startingRow,startingCol)) {
+      throw new IllegalArgumentException();
+    }
+    for (int r = 0; r<row; r++){
+      for (int c = 0; c<col; c++){
+        if (board[r][c] != 0){
+          throw new IllegalStateException();
+        }
+      }
+    }
+    return countSolutionsHelper(startingRow,startingCol,1);
+  }
+
+  private int countSolutionsHelper(int row, int col, int level){
+    int numSolution = 0;
+    board[row][col] = level;
+    if (level == this.row * this.col){
+      return 1;
+    }
+    for (int i=0; i<8; i++){
+      int newRow = row + knightMoves[i][0];
+      int newCol = col + knightMoves[i][1];
+      if (!isOutOfRange(newRow,newCol) && board[newRow][newCol] == 0 ){
+        numSolution += countSolutionsHelper(newRow, newCol, level+1);
+        board[newRow][newCol] = 0;
+      }
+    }
+    board[row][col] = 0;
+    return numSolution;
   }
 
   private boolean isOutOfRange(int row, int col){
