@@ -1,10 +1,11 @@
 public class KnightBoard {
 
   public static void main(String[]args){
-      KnightBoard k = new KnightBoard(3,6);
+      KnightBoard k = new KnightBoard(5,5);
       
       //k.solve(0,0);
       //System.out.println(k.countSolutions(0,0));
+      k.addKnight(2,2);
       System.out.println(k.toStringMoves());
   }
 
@@ -101,7 +102,7 @@ public class KnightBoard {
         board[newRow][newCol] = 0;
       }
     }
-    //board[row][col] = 0;
+    board[row][col] = 0;
     return false;
   }
 
@@ -157,5 +158,15 @@ public class KnightBoard {
 
     private boolean solveFastHelper(int row, int col, int level){
 	return true;
+    }
+    
+    public void addKnight(int row, int col){
+	for (int i=0; i<8; i++){
+	    int newRow = row + knightMoves[i][0];
+	    int newCol = col + knightMoves[i][1];
+	    if (!isOutOfRange(newRow,newCol) && board[newRow][newCol] == 0 ){
+		validMoves[newRow][newCol]--;
+	    }
+	}
     }
 }
