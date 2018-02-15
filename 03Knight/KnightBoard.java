@@ -1,13 +1,15 @@
 public class KnightBoard {
 
   public static void main(String[]args){
-    KnightBoard k = new KnightBoard(4,6);
-    //k.solve(3,2);
-    System.out.println(k.countSolutions(0,0));
-    System.out.println(k);
+      KnightBoard k = new KnightBoard(3,6);
+      
+      //k.solve(0,0);
+      //System.out.println(k.countSolutions(0,0));
+      System.out.println(k.toStringMoves());
   }
 
   private int[][] board;
+  private int[][] validMoves;
   private int row;
   private int col;
   private int[][] knightMoves = {{1,2},{2,1},{2,-1},{1,-2},{-1,-2},{-2,-1},{-2,1},{-1,2}};
@@ -17,8 +19,21 @@ public class KnightBoard {
 	    throw new IllegalArgumentException();
     }
     board = new int[startingRows][startingCols];
+    validMoves = new int[startingRows][startingCols];
     row = startingRows;
     col = startingCols;
+    //New stuff
+    for (int r=0; r<row; r++){
+	for (int c=0; c<col; c++){
+	     for (int i=0; i<8; i++){
+		 int newRow = r + knightMoves[i][0];
+		 int newCol = c + knightMoves[i][1];
+		 if (!isOutOfRange(newRow,newCol)){
+		     validMoves[r][c]++;
+		 }
+	     }
+	}
+    }
   }
 
   public String toString(){
@@ -40,6 +55,17 @@ public class KnightBoard {
     return output;
   }
 
+  public String toStringMoves(){
+      String output = "";
+      for (int i=0; i<row; i++){
+	  for (int j=0; j<col; j++){
+	      output += validMoves[i][j] + " ";
+	  }
+	  output += "\n";
+      }
+      return output;
+  }
+
   public boolean solve(int startingRow, int startingCol){
     if (isOutOfRange(startingRow,startingCol)) {
       throw new IllegalArgumentException();
@@ -59,11 +85,11 @@ public class KnightBoard {
     if (level == this.row * this.col){
       return true;
     }
-    /*Printing out the board
+    /*
     System.out.println(Text.CLEAR_SCREEN);
     System.out.println(Text.go(1,1));
     System.out.println(this);
-    Text.wait(200); //adjust this delay
+    Text.wait(2000); //adjust this delay
     */
     for (int i=0; i<8; i++){
       int newRow = row + knightMoves[i][0];
@@ -75,7 +101,7 @@ public class KnightBoard {
         board[newRow][newCol] = 0;
       }
     }
-    board[row][col] = 0;
+    //board[row][col] = 0;
     return false;
   }
 
@@ -115,4 +141,21 @@ public class KnightBoard {
     return row < 0 || row >= this.row || col < 0 || col >= this.col;
   }
 
+  public boolean solveFast (int startingRow, int startingCol){
+    if (isOutOfRange(startingRow,startingCol)) {
+      throw new IllegalArgumentException();
+    }
+    for (int r = 0; r<row; r++){
+      for (int c = 0; c<col; c++){
+        if (board[r][c] != 0){
+          throw new IllegalStateException();
+        }
+      }
+    }
+    return solveFastHelper(startingRow, startingCol, 1);
+  }
+
+    private boolean solveFastHelper(int row, int col, int level){
+	return true;
+    }
 }
