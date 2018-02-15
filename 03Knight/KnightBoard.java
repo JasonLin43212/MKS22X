@@ -5,7 +5,7 @@ public class KnightBoard {
       
       //k.solve(0,0);
       //System.out.println(k.countSolutions(0,0));
-      k.addKnight(2,2);
+      k.addKnight(2,3);
       System.out.println(k.toStringMoves());
   }
 
@@ -157,7 +157,23 @@ public class KnightBoard {
   }
 
     private boolean solveFastHelper(int row, int col, int level){
-	return true;
+	board[row][col] = level;
+	if (level == this.row * this.col){
+	    return true;
+	}
+	int[] possibleMoves;
+	for (int i=0; i<8; i++){
+	    int newRow = row + knightMoves[i][0];
+	    int newCol = col + knightMoves[i][1];
+	    if (!isOutOfRange(newRow,newCol) && board[newRow][newCol] == 0 ){
+		if (solveHelper(newRow, newCol, level+1)){
+		    return true;
+		}
+		board[newRow][newCol] = 0;
+	    }
+	}
+	board[row][col] = 0;
+	return false;
     }
     
     public void addKnight(int row, int col){
