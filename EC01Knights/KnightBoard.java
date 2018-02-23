@@ -1,12 +1,17 @@
+import java.util.*;
+
 public class KnightBoard {
 
   public static void main(String[]args){
-      KnightBoard k = new KnightBoard(5,5);
+    KnightBoard k = new KnightBoard(50,50);
       
-      //k.solve(0,0);
-      //System.out.println(k.countSolutions(0,0));
-      k.addKnight(2,3);
-      System.out.println(k.toStringMoves());
+    //k.solve(0,0);
+    //System.out.println(k.countSolutions(0,0));
+    //k.removeKnight(2,3);
+    k.solveFast(0,0);
+    System.out.println(k.isSolutionGood(0,0));
+    System.out.println(k);
+    //System.out.println(k.toStringMoves());
   }
 
   private int[][] board;
@@ -25,15 +30,15 @@ public class KnightBoard {
     col = startingCols;
     //New stuff
     for (int r=0; r<row; r++){
-	for (int c=0; c<col; c++){
-	     for (int i=0; i<8; i++){
-		 int newRow = r + knightMoves[i][0];
-		 int newCol = c + knightMoves[i][1];
-		 if (!isOutOfRange(newRow,newCol)){
-		     validMoves[r][c]++;
-		 }
-	     }
-	}
+      for (int c=0; c<col; c++){
+        for (int i=0; i<8; i++){
+          int newRow = r + knightMoves[i][0];
+          int newCol = c + knightMoves[i][1];
+          if (!isOutOfRange(newRow,newCol)){
+            validMoves[r][c]++;
+          }
+        }
+      }
     }
   }
 
@@ -42,9 +47,15 @@ public class KnightBoard {
     for (int i=0; i<row; i++){
 	    for (int j=0; j<col; j++){
         if (board[i][j]==0){
-          output += "__ ";
+          output += "____ ";
         }
         else if (board[i][j] < 10){
+          output += "   " + board[i][j] + " ";
+        }
+        else if (board[i][j] < 100){
+          output += "  " + board[i][j] + " ";
+        }
+        else if (board[i][j] < 1000){
           output += " " + board[i][j] + " ";
         }
         else {
@@ -57,14 +68,19 @@ public class KnightBoard {
   }
 
   public String toStringMoves(){
-      String output = "";
-      for (int i=0; i<row; i++){
-	  for (int j=0; j<col; j++){
-	      output += validMoves[i][j] + " ";
-	  }
-	  output += "\n";
+    String output = "";
+    for (int i=0; i<row; i++){
+      for (int j=0; j<col; j++){
+        if (validMoves[i][j] < 10){
+          output += " " + validMoves[i][j] + " ";
+        }
+        else {
+          output += validMoves[i][j] + " ";
+        }
       }
-      return output;
+      output += "\n";
+    }
+    return output;
   }
 
   public boolean solve(int startingRow, int startingCol){
@@ -87,15 +103,15 @@ public class KnightBoard {
       return true;
     }
     /*
-    System.out.println(Text.CLEAR_SCREEN);
-    System.out.println(Text.go(1,1));
-    System.out.println(this);
-    Text.wait(2000); //adjust this delay
+      System.out.println(Text.CLEAR_SCREEN);
+      System.out.println(Text.go(1,1));
+      System.out.println(this);
+      Text.wait(2000); //adjust this delay
     */
     for (int i=0; i<8; i++){
       int newRow = row + knightMoves[i][0];
       int newCol = col + knightMoves[i][1];
-      if (!isOutOfRange(newRow,newCol) && board[newRow][newCol] == 0 ){
+      if (isValid(newRow,newCol)){
         if (solveHelper(newRow, newCol, level+1)){
           return true;
         }
@@ -129,7 +145,7 @@ public class KnightBoard {
     for (int i=0; i<8; i++){
       int newRow = row + knightMoves[i][0];
       int newCol = col + knightMoves[i][1];
-      if (!isOutOfRange(newRow,newCol) && board[newRow][newCol] == 0 ){
+      if (isValid(newRow,newCol)){
         numSolution += countSolutionsHelper(newRow, newCol, level+1);
         board[newRow][newCol] = 0;
       }
@@ -140,6 +156,10 @@ public class KnightBoard {
 
   private boolean isOutOfRange(int row, int col){
     return row < 0 || row >= this.row || col < 0 || col >= this.col;
+  }
+
+  private boolean isValid(int row, int col){
+    return !isOutOfRange(row,col) && board[row][col] == 0;
   }
 
   public boolean solveFast (int startingRow, int startingCol){
@@ -156,33 +176,79 @@ public class KnightBoard {
     return solveFastHelper(startingRow, startingCol, 1);
   }
 
-    private boolean solveFastHelper(int row, int col, int level){
-	board[row][col] = level;
-	if (level == this.row * this.col){
+  private boolean solveFastHelper(int row, int col, int level){
+    board[row][col] = level;
+    addKnight(row,col);
+    if (level == this.row * this.col){
 	    return true;
-	}
-	int[] possibleMoves;
-	for (int i=0; i<8; i++){
-	    int newRow = row + knightMoves[i][0];
-	    int newCol = col + knightMoves[i][1];
-	    if (!isOutOfRange(newRow,newCol) && board[newRow][newCol] == 0 ){
-		if (solveHelper(newRow, newCol, level+1)){
-		    return true;
-		}
-		board[newRow][newCol] = 0;
-	    }
-	}
-	board[row][col] = 0;
-	return false;
     }
+    int[] possibleMoves = {9,9,9,9,9,9,9,9};
+    /*
+    System.out.println(Text.CLEAR_SCREEN);
+      System.out.println(Text.go(1,1));
+      System.out.println(this);
+      System.out.println(this.toStringMoves());
+      System.out.println(Arrays.toString(possibleMoves));
+      Text.wait(3000); //adjust this delay
+    */
+    for (int i = 0; i<8; i++){
+      for (int j = 0; j<8; j++){
+        int newRow = row + knightMoves[j][0];
+        int newCol = col + knightMoves[j][1];
+        if (isValid(newRow,newCol)){
+          possibleMoves[j] = validMoves[newRow][newCol];
+        }
+        if (i == possibleMoves[j] && solveFastHelper(newRow, newCol, level+1)){
+          return true;
+        }
+      }
+    }
+    board[row][col] = 0;
+    removeKnight(row,col);
+    return false;
+  }
     
-    public void addKnight(int row, int col){
-	for (int i=0; i<8; i++){
+  private void addKnight(int row, int col){
+    validMoves[row][col] += 9;
+    for (int i=0; i<8; i++){
 	    int newRow = row + knightMoves[i][0];
 	    int newCol = col + knightMoves[i][1];
-	    if (!isOutOfRange(newRow,newCol) && board[newRow][newCol] == 0 ){
-		validMoves[newRow][newCol]--;
+	    if (isValid(newRow,newCol)){
+        validMoves[newRow][newCol]--;
 	    }
-	}
     }
+  }
+
+  private void removeKnight(int row, int col){
+    validMoves[row][col] -= 9;
+    for (int i=0; i<8; i++){
+	    int newRow = row + knightMoves[i][0];
+	    int newCol = col + knightMoves[i][1];
+	    if (isValid(newRow,newCol)){
+        validMoves[newRow][newCol]++;
+	    }
+    }
+  }
+
+  public boolean isSolutionGood(int row, int col){
+    int i = 2;
+    int max = this.row*this.col;
+    while (i<=max) {
+      boolean badSolution = true;
+      for (int j = 0; j<8; j++){
+        int newRow =  row + knightMoves[j][0];
+        int newCol = col + knightMoves[j][1];
+        if (!isOutOfRange(newRow,newCol) && board[newRow][newCol] == i){
+          row = newRow;
+          col = newCol;
+          badSolution = false;
+        }
+      }
+      if (badSolution){
+        return false;
+      }
+      i++;
+    }
+    return true;
+  }
 }
