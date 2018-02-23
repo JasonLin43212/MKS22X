@@ -3,13 +3,13 @@ import java.util.*;
 public class KnightBoard {
 
   public static void main(String[]args){
-    KnightBoard k = new KnightBoard(50,50);
+    KnightBoard k = new KnightBoard(5,5);
       
-    //k.solve(0,0);
+    k.solve(0,0);
     //System.out.println(k.countSolutions(0,0));
     //k.removeKnight(2,3);
-    k.solveFast(0,0);
-    System.out.println(k.isSolutionGood(0,0));
+    //k.solveFast(0,0);
+    System.out.println(k.isSolutionGood(1,0));
     System.out.println(k);
     //System.out.println(k.toStringMoves());
   }
