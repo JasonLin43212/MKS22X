@@ -30,12 +30,28 @@ public class Maze{
 	    String data = "";
 	    int width = 0;
 	    int height = 0;
+	    int numE = 0;
+	    int numS = 0;
 	
 	    while (inf.hasNextLine()){
 		String line = inf.nextLine();
 		width = line.length();
 		height++;
 		data += line;
+	    }
+
+	    for (int i=0; i<data.length(); i++){
+		String character = data.substring(i,i+1);
+		if (character.equals("E")){
+		    numE++;
+		}
+		if (character.equals("S")){
+		    numS++;
+		}
+	    }
+
+	    if (numE != 1 || numS != 1){
+		throw new IllegalStateException();
 	    }
 
 	    maze = new char[height][width];
