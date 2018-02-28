@@ -19,52 +19,49 @@ public class Maze{
       2. The maze has a border of '#' around the edges. So you don't have to check for out of bounds!
 
 
-      3. When the file is not found OR the file is invalid (not exactly 1 E and 1 S) then: print a meaningful error and exit the program.
+     
+      3. When the file is not found OR the file is invalid (not exactly 1 E and 1 S) then: 
+
+         throw a FileNotFoundException or IllegalStateException
 
     */
 
-    public Maze(String filename){
-	try {
-	    Scanner inf = new Scanner(new File(filename));
+    public Maze(String filename) throws FileNotFoundException{
+	Scanner inf = new Scanner(new File(filename));
 
-	    String data = "";
-	    int width = 0;
-	    int height = 0;
-	    int numE = 0;
-	    int numS = 0;
+	String data = "";
+	int width = 0;
+	int height = 0;
+	int numE = 0;
+	int numS = 0;
 	
-	    while (inf.hasNextLine()){
-		String line = inf.nextLine();
-		width = line.length();
-		height++;
-		data += line;
+	while (inf.hasNextLine()){
+	    String line = inf.nextLine();
+	    width = line.length();
+	    height++;
+	    data += line;
+	}
+
+	for (int i=0; i<data.length(); i++){
+	    String character = data.substring(i,i+1);
+	    if (character.equals("E")){
+		numE++;
 	    }
-
-	    for (int i=0; i<data.length(); i++){
-		String character = data.substring(i,i+1);
-		if (character.equals("E")){
-		    numE++;
-		}
-		if (character.equals("S")){
-		    numS++;
-		}
+	    if (character.equals("S")){
+		numS++;
 	    }
+	}
 
-	    if (numE != 1 || numS != 1){
-		throw new IllegalStateException();
+	if (numE != 1 || numS != 1){
+	    throw new IllegalStateException();
+	}
+
+	maze = new char[height][width];
+
+	for (int i=0; i<height; i++){
+	    for (int j=0; j<width; j++){
+		maze[i][j]  = data.charAt(i*width+j); 
 	    }
-
-	    maze = new char[height][width];
-
-	    for (int i=0; i<height; i++){
-		for (int j=0; j<width; j++){
-		    maze[i][j]  = data.charAt(i*width+j); 
-		}
-	    }
-
-	} catch (FileNotFoundException e) {
-	    System.out.println(e);
-	    System.exit(1);
 	}
     }
 
@@ -113,15 +110,24 @@ public class Maze{
     */
     public int solve(){
 
-            //find the location of the S. 
+	int startRow = 0;
+	int startCol = 0;
+	//find the location of the S. 
+	for (int i=0; i<maze.length(); i++){
+	    for (int j=0; j<maze[0].length(); j++){
+		if (maze[i][j] == 'S'){
+		    startRow = i;
+		    startCol = j;
+		}
+	    }
+	}
 
+	//erase the S
+	maze[startRow][startCol] = '';
 
-            //erase the S
-
-
-            //and start solving at the location of the s.
-
-            //return solve(???,???);
+	//and start solving at the location of the s.
+	
+	//return solve(???,???);
 	return -1;
 
     }
