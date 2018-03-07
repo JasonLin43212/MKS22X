@@ -126,7 +126,6 @@ public class Maze{
     maze[startRow][startCol] = ' ';
     //and start solving at the location of the s.
 
-    System.out.println(startRow+" "+startCol);
     return solve(startRow,startCol,0);
 
   }
