@@ -4,7 +4,8 @@ import java.io.*;
 public class USACO {
     
   public static void main(String[]args){
-    System.out.println(USACO.bronze("bronze4.dat"));
+      // System.out.println(USACO.bronze("bronze4.dat"));
+      System.out.println(USACO.silver("silver1.dat"));
   }
 
 
@@ -65,4 +66,34 @@ public class USACO {
 	    }
     }
   }
+
+    public static int silver(String filename){
+	int[][] current, past;
+	char[][] map;
+	int row,col,numMoves;
+	try {
+	    Scanner in = new Scanner (new File (filename));
+	    
+	    row = Integer.parseInt(in.next());
+	    col = Integer.parseInt(in.next());
+	    numMoves = Integer.parseInt(in.next());
+
+	    map = new char[row][col];
+	    current = new int[row][col];
+	    past = new int[row][col];
+	    
+	    for (int i=0; i<row; i++){
+		for (int j=0; j<col; j++){
+		    map[i][j] = in.next().charAt(0);
+		}
+	    }
+
+	    System.out.println(Arrays.deepToString(map));
+	    return 1;
+	} catch (FileNotFoundException e){
+	    System.out.println("File Not Found");
+	    System.exit(1);
+	}
+	return 0;
+    }
 }
