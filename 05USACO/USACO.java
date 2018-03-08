@@ -4,8 +4,8 @@ import java.io.*;
 public class USACO {
     
   public static void main(String[]args){
-      // System.out.println(USACO.bronze("bronze4.dat"));
-      System.out.println(USACO.silver("silver1.dat"));
+    // System.out.println(USACO.bronze("bronze4.dat"));
+    System.out.println(USACO.silver("silver5.dat"));
   }
 
 
@@ -67,11 +67,11 @@ public class USACO {
     }
   }
 
-    public static int silver(String filename){
-	int[][] current, past;
-	char[][] map;
-	int row,col,numMoves;
-	try {
+  public static int silver(String filename){
+    int[][] current, past;
+    char[][] map;
+    int row,col,numMoves,startRow,startCol,endRow,endCol;
+    try {
 	    Scanner in = new Scanner (new File (filename));
 	    
 	    row = Integer.parseInt(in.next());
@@ -81,19 +81,55 @@ public class USACO {
 	    map = new char[row][col];
 	    current = new int[row][col];
 	    past = new int[row][col];
-	    
+
 	    for (int i=0; i<row; i++){
-		for (int j=0; j<col; j++){
-		    map[i][j] = in.next().charAt(0);
-		}
+        String line = in.next();
+        for (int j=0; j<col; j++){
+          map[i][j] = line.charAt(j);
+        }
 	    }
 
-	    System.out.println(Arrays.deepToString(map));
-	    return 1;
-	} catch (FileNotFoundException e){
+      startRow = Integer.parseInt(in.next())-1;
+      startCol = Integer.parseInt(in.next())-1;
+      endRow = Integer.parseInt(in.next())-1;
+      endCol = Integer.parseInt(in.next())-1;
+
+      past[startRow][startCol] = 1;
+
+      for (int i=0; i<numMoves; i++){
+        for (int r=0; r<row; r++){
+          for (int c=0; c<col; c++){
+            if (map[r][c] != '*'){
+              int sumNeighbors = 0;
+              if (isOnBoard(r+1,c,row,col)){
+                sumNeighbors += past[r+1][c];
+              }
+              if (isOnBoard(r-1,c,row,col)){
+                sumNeighbors += past[r-1][c];
+              }
+              if (isOnBoard(r,c+1,row,col)){
+                sumNeighbors += past[r][c+1];
+              }
+              if (isOnBoard(r,c-1,row,col)){
+                sumNeighbors += past[r][c-1];
+              }
+              current[r][c] = sumNeighbors;
+            }
+          }
+        }
+        past = current;
+        current = new int[row][col];
+      }
+      
+	    return past[endRow][endCol];
+    } catch (FileNotFoundException e){
 	    System.out.println("File Not Found");
 	    System.exit(1);
-	}
-	return 0;
     }
+    return 0;
+  }
+
+  public static boolean isOnBoard (int currentR, int currentC, int row, int col){
+    return currentR >= 0 && currentC >= 0 && currentR < row && currentC < col;
+  }
 }
