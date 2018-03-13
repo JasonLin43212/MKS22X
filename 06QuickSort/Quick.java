@@ -3,9 +3,14 @@ import java.util.*;
 public class Quick{
 
   public static void main(String[]args){
-    int[] data = {2,5,19,3,20,32,1,-1};
+    int[]ary = { 2,4, 10,5, 15, 23, 0,  5,4,10,-1,30};
 
-    System.out.println(Quick.partition(data,4,9));
+    System.out.println(Quick.quickselect(ary,0));
+    System.out.println(Quick.quickselect(ary,1));
+    System.out.println(Quick.quickselect(ary,2));
+    System.out.println(Quick.quickselect(ary,3));
+    System.out.println(Quick.quickselect(ary,4));
+    System.out.println(Quick.quickselect(ary,5));
   }
 
   public static int partition ( int[] data, int start, int end){
@@ -34,5 +39,23 @@ public class Quick{
     int old = data[indexA];
     data[indexA] = data[indexB];
     data[indexB] = old;
+  }
+
+  public static int quickselect(int[] data, int k){
+    int start = 0;
+    int end = data.length -1;
+    for (int i=0; i<data.length; i++){
+      int foundIndex = partition(data,start,end);
+      if (foundIndex == k) {
+        return data[foundIndex];
+      }
+      else if (foundIndex < k){
+        start = foundIndex + 1;
+      }
+      else {
+        end = foundIndex - 1;
+      }
+    }
+    return 0;
   }
 }
