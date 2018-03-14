@@ -41,13 +41,13 @@ public class Quick{
     data[indexB] = old;
   }
 
-  public static int quickselect(int[] data, int k){
+  public static int quickselect(int[] ary, int k){
     int start = 0;
-    int end = data.length -1;
-    for (int i=0; i<data.length; i++){
-      int foundIndex = partition(data,start,end);
+    int end = ary.length -1;
+    for (int i=0; i<ary.length; i++){
+      int foundIndex = partition(ary,start,end);
       if (foundIndex == k) {
-        return data[foundIndex];
+        return ary[foundIndex];
       }
       else if (foundIndex < k){
         start = foundIndex + 1;
