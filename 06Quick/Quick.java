@@ -3,14 +3,9 @@ import java.util.*;
 public class Quick{
 
   public static void main(String[]args){
-    int[]ary = { 2,4, 10,5, 15, 23, 0,  5,4,10,-1,30};
-
-    System.out.println(Quick.quickselect(ary,0));
-    System.out.println(Quick.quickselect(ary,1));
-    System.out.println(Quick.quickselect(ary,2));
-    System.out.println(Quick.quickselect(ary,3));
-    System.out.println(Quick.quickselect(ary,4));
-    System.out.println(Quick.quickselect(ary,5));
+    int[]ary = { 9,8,7,6,5,4,3,2,1,-100};
+    Quick.quicksort(ary);
+    System.out.println(Arrays.toString(ary));
   }
 
   public static int partition ( int[] data, int start, int end){
@@ -57,5 +52,24 @@ public class Quick{
       }
     }
     return 0;
+  }
+
+  public static void quicksort (int[] ary){
+    quicksortHelper(ary,0,ary.length-1);
+  }
+
+  private static void quicksortHelper (int[] ary, int start, int end){
+    // Not necessary but I think this makes it run faster
+    if (start == end){
+      return;
+    }
+
+    int divideIndex = partition(ary,start,end);
+    if (start != divideIndex){
+      quicksortHelper(ary,start,divideIndex-1);
+    }
+    if (end != divideIndex) {
+      quicksortHelper(ary,divideIndex+1,end);
+    }
   }
 }
