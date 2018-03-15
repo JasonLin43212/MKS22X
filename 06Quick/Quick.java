@@ -72,4 +72,34 @@ public class Quick{
       quicksortHelper(ary,divideIndex+1,end);
     }
   }
+
+    public static int[] dutchPartition(int[] ary, int start, int end){
+	int randIndex = (int) (Math.random()*(end-start+1)+start);
+	int randElem = data[randIndex];
+	int lt = start + 1;
+	int gt = end;
+	int current = start + 1;
+	swap(data,randIndex,start);
+	while ( current <= gt){
+	    if (data[current] = randElem){
+		i++;
+	    }
+	    else if (data[current] > randElem){
+		swap(ary,i,gt);
+		gt--;
+	    }
+	    else {
+		swap(data,lt,i);
+		lt++;
+		i++
+	    }
+	    //System.out.println(Arrays.toString(data));
+	    //System.out.println("small: "+ small + " large: " + large + "\n");
+	}
+	swap(data,start,lt-1);
+	//System.out.println(Arrays.toString(data));
+	return ;
+	
+
+    }
 }
