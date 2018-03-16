@@ -3,8 +3,13 @@ import java.util.*;
 public class Quick{
 
   public static void main(String[]args){
-    int[]ary = { 9,8,7,6,5,4,3,2,1,-100};
-    Quick.quicksort(ary);
+    int[]ary = {1,4,5,3,3,4,5,4,3,4,363,4565434,6346,43,634,6,346};
+    //System.out.println(Arrays.toString(Quick.dutchPartition(ary,0,ary.length-1)));
+    long startTime = System.nanoTime();
+     Quick.quicksort(ary);
+    long endTime   = System.nanoTime();
+    long totalTime = endTime - startTime;
+    System.out.println(totalTime);
     System.out.println(Arrays.toString(ary));
   }
 
@@ -63,7 +68,7 @@ public class Quick{
     if (start == end){
       return;
     }
-
+    /*For old partition
     int divideIndex = partition(ary,start,end);
     if (start != divideIndex){
       quicksortHelper(ary,start,divideIndex-1);
@@ -71,35 +76,46 @@ public class Quick{
     if (end != divideIndex) {
       quicksortHelper(ary,divideIndex+1,end);
     }
+    */
+    
+    //For Dutch partition
+    int[] output = dutchPartition(ary,start,end);
+    //System.out.println("start: " + start + " "  +output[0] + " end: " + end + " " + output[1]);
+    //System.out.println(Arrays.toString(ary));
+    if (output[0] != start){
+      quicksortHelper(ary,start,output[0]-1);
+    }
+    if (output[1] != end){
+      quicksortHelper(ary,output[1]+1,end);
+    }
+    
   }
 
-    public static int[] dutchPartition(int[] ary, int start, int end){
-	int randIndex = (int) (Math.random()*(end-start+1)+start);
-	int randElem = data[randIndex];
-	int lt = start + 1;
-	int gt = end;
-	int current = start + 1;
-	swap(data,randIndex,start);
-	while ( current <= gt){
-	    if (data[current] = randElem){
-		i++;
+  public static int[] dutchPartition(int[] ary, int start, int end){
+    int randIndex = (int) (Math.random()*(end-start+1)+start);
+    int randElem = ary[randIndex];
+    int lt = start;
+    int gt = end;
+    int current = start;
+    while ( current <= gt){
+	    if (ary[current] == randElem){
+        current++;
 	    }
-	    else if (data[current] > randElem){
-		swap(ary,i,gt);
-		gt--;
+	    else if (ary[current] > randElem){
+        swap(ary,current,gt);
+        gt--;
 	    }
 	    else {
-		swap(data,lt,i);
-		lt++;
-		i++
-	    }
-	    //System.out.println(Arrays.toString(data));
-	    //System.out.println("small: "+ small + " large: " + large + "\n");
-	}
-	swap(data,start,lt-1);
-	//System.out.println(Arrays.toString(data));
-	return ;
-	
-
+        swap(ary,lt,current);
+        lt++;
+        current++;
+      }
+      //System.out.println(Arrays.toString(ary));
+	    //System.out.println("small: "+ lt + " large: " + gt + " cuurent: " + current+ " elem: " + randElem +"\n");
     }
+    int[] output = new int[2];
+    output[0] = lt;
+    output[1] = gt;
+    return output;
+  }
 }
