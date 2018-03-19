@@ -6,8 +6,8 @@ public class Quick{
     int[]ary = {120,113,111,105,103,20,14,11,9,9,9,9,9,9,9,6,4,3,2,1};
 
     long startTime = System.nanoTime();
-    //Quick.quicksort(ary);
-    System.out.println(Quick.quickselect(ary,11));
+    Quick.quicksort(ary);
+    //System.out.println(Quick.quickselect(ary,11));
     long endTime   = System.nanoTime();
     long totalTime = endTime - startTime;
     System.out.println(totalTime);
