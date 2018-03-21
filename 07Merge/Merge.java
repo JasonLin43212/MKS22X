@@ -3,11 +3,12 @@ import java.util.*;
 public class Merge{
 
   public static void main(String[]args){
-    int[] ary = {2,4,6,7,9,1,3,4,6,7,8};
-    int[] data = new int[ary.length];
-    Merge.merge(data,ary,0,4,10);
-    System.out.println(Arrays.toString(ary));
+    int[] data = {2,3,4,5,1,2,3,1,2,3,1,2,3,1,4,3,1,2,3,1,3,1,2,3,1};
+    int[] temp = new int[data.length];
+    //Merge.merge(data,ary,0,1,2);
+    Merge.mergesort(data);
     System.out.println(Arrays.toString(data));
+    //System.out.println(Arrays.toString(temp));
   }
 
   public static void merge(int[] data, int[] temp, int start, int mid, int end){
@@ -33,5 +34,23 @@ public class Merge{
       }
       dataIndex++;
     }
+  }
+
+  public static void mergesort(int[] data){
+    int[] temp = new int[data.length];
+    msort(data,temp,0,data.length-1);
+  }
+
+  private static void msort(int[]data, int[]temp, int lo, int hi){
+    if (lo >= hi){
+      return;
+    }
+    for (int i=lo; i<hi; i++){
+      temp[i] = data[i];
+    }
+    int mid = (lo/2) + (hi/2);
+    msort(temp,data,lo,mid);
+    msort(temp,data,mid+1,hi);
+    merge(data,temp,lo,mid,hi);
   }
 }
