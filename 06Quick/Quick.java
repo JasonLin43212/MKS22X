@@ -82,7 +82,7 @@ public class Quick{
 
   private static void quicksortHelper (int[] ary, int start, int end){
     // Not necessary but I think this makes it run faster
-    if (start == end){
+    if (start >= end){
 	    return;
     }
     /*For old partition

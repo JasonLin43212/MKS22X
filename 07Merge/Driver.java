@@ -69,7 +69,7 @@ public class Driver{
 	/*
 	 * Test your sort here!
 	 */
-	Quick.quicksort(start);
+	Merge.mergesort(start);
 	long elapsedTime = System.currentTimeMillis() - startTime;
 	if(Arrays.equals(start,result)){
 	    System.out.println("PASS Case "+args[1]+". "+name(type)+" array, size:"+size+" "+elapsedTime/1000.0+"sec ");
