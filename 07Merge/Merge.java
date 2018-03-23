@@ -53,4 +53,17 @@ public class Merge{
 	msort(temp,data,mid+1,hi);
 	merge(data,temp,lo,mid,hi);
     }
+
+    public static void insertionSort(int[] data, int lo, int hi){
+    for (int i=lo+1;i<hi+1;i++){
+      int currentData = data[i];
+      int j = i;
+      while (j>0 && currentData < data[j-1]){
+        data[j] = data[j-1];
+        j--;
+      }
+      data[j] = currentData;
+    }
 }
+}
+
