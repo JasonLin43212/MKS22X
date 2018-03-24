@@ -3,10 +3,19 @@ import java.util.*;
 public class Merge{
 
   public static void main(String[]args){
-    int[] data = {3,2};
-    int[] temp = new int[data.length];
+    int[] data = new int[1000000];
+    Random r = new Random(169);
+    for (int i=0; i<1000000; i++){
+      data[i] = r.nextInt();
+    }
     //Merge.merge(data,ary,0,1,2);
+    long startTime = System.currentTimeMillis();
+    /*
+     * Test your sort here!
+     */
     Merge.mergesort(data);
+    long elapsedTime = System.currentTimeMillis() - startTime;
+    System.out.println(elapsedTime/1000.0+"sec");
     //System.out.println(Arrays.toString(data));
     //System.out.println(Arrays.toString(temp));
   }
@@ -38,7 +47,7 @@ public class Merge{
 
   public static void mergesort(int[] data){
     int[] temp = new int[data.length];
-    msort(data,temp,0,data.length-1);
+    msort2(data,temp,0,data.length-1);
   }
 
   private static void msort(int[]data, int[]temp, int lo, int hi){
@@ -54,11 +63,25 @@ public class Merge{
     merge(data,temp,lo,mid,hi);
   }
 
+   private static void msort2(int[]data, int[]temp, int lo, int hi){
+    if (hi-lo<=7){
+      insertionSort(data,lo,hi);
+	    return;
+    }
+    for (int i=lo; i<hi+1; i++){
+	    temp[i] = data[i];
+    }
+    int mid = (lo/2) + (hi/2);
+    msort(temp,data,lo,mid);
+    msort(temp,data,mid+1,hi);
+    merge(data,temp,lo,mid,hi);
+  }
+
   public static void insertionSort(int[] data, int lo, int hi){
     for (int i=lo+1;i<hi+1;i++){
       int currentData = data[i];
       int j = i;
-      while (j>0 && currentData < data[j-1]){
+      while (j>lo && currentData < data[j-1]){
         data[j] = data[j-1];
         j--;
       }

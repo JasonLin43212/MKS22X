@@ -3,15 +3,18 @@ import java.util.*;
 public class Quick{
 
   public static void main(String[]args){
-    int[]ary = {120,113,111,105,103,20,14,11,9,9,9,9,9,9,9,6,4,3,2,1};
-
-    long startTime = System.nanoTime();
-    Quick.quicksort(ary);
-    //System.out.println(Quick.quickselect(ary,11));
-    long endTime   = System.nanoTime();
-    long totalTime = endTime - startTime;
-    System.out.println(totalTime);
-    System.out.println(Arrays.toString(ary));
+    int[] data = new int[1000000];
+    Random r = new Random(169);
+    for (int i=0; i<1000000; i++){
+      data[i] = r.nextInt();
+    }
+    long startTime = System.currentTimeMillis();
+    /*
+     * Test your sort here!
+     */
+    Quick.quicksort(data);
+    long elapsedTime = System.currentTimeMillis() - startTime;
+    System.out.println(elapsedTime/1000.0+"sec");
   }
 
   public static int partition ( int[] data, int start, int end){
@@ -77,7 +80,7 @@ public class Quick{
   }
 
   public static void quicksort (int[] ary){
-    quicksortHelper(ary,0,ary.length-1);
+    quicksortHelper2(ary,0,ary.length-1);
   }
 
   private static void quicksortHelper (int[] ary, int start, int end){
@@ -99,6 +102,20 @@ public class Quick{
     int[] output = dutchPartition(ary,start,end);
     //System.out.println("start: " + start + " "  +output[0] + " end: " + end + " " + output[1]);
     //System.out.println(Arrays.toString(ary));
+    if (output[0] != start){
+	    quicksortHelper(ary,start,output[0]-1);
+    }
+    if (output[1] != end){
+	    quicksortHelper(ary,output[1]+1,end);
+    }
+  }
+
+  private static void quicksortHelper2(int[] ary, int start, int end){
+    if (end - start <= 7){
+      insertionSort(ary,start,end);
+	    return;
+    }
+    int[] output = dutchPartition(ary,start,end);
     if (output[0] != start){
 	    quicksortHelper(ary,start,output[0]-1);
     }
@@ -133,5 +150,17 @@ public class Quick{
     output[0] = lt;
     output[1] = gt;
     return output;
+  }
+
+   public static void insertionSort(int[] data, int lo, int hi){
+    for (int i=lo+1;i<hi+1;i++){
+      int currentData = data[i];
+      int j = i;
+      while (j>lo && currentData < data[j-1]){
+        data[j] = data[j-1];
+        j--;
+      }
+      data[j] = currentData;
+    }
   }
 }
