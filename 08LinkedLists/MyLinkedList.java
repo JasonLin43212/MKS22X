@@ -3,17 +3,39 @@ public class MyLinkedList {
   public static void main(String[]args) {
     MyLinkedList l = new MyLinkedList();
     l.setPrint(true);
+    l.toggleSuper(true);
+    l.add(2);
     System.out.println(l);
+    l.add(3);
+    System.out.println(l);
+    l.add(0,43);
+    System.out.println(l);
+    l.add(2,29);
     System.out.println(l);
   }
 
   private Node first,last;
   private int length;
   private boolean canPrint;
+  private boolean superToStringToggle;
 
   public MyLinkedList() {
     length = 0;
     canPrint = false;
+    superToStringToggle = false;
+  }
+
+  public void toggleSuper(boolean value) {
+    superToStringToggle = value;
+  }
+
+  public String superToString() {
+    String output = "";
+    for (int i=0; i<length; i++){
+      Node current = getNode(i);
+      output += "[" + current.getPrev() + "," + current.getValue() + "," + current.getNext() + "]\n";
+    }
+    return output;
   }
 
   public String toString() {
@@ -24,7 +46,11 @@ public class MyLinkedList {
         output += ",";
       }
     }
-    return output + "]";
+    output += "]";
+    if (superToStringToggle){
+      output += "\n" + superToString();
+    }
+    return output;
   }
 
   public int size() {
@@ -65,6 +91,7 @@ public class MyLinkedList {
     }
     else {
       last.setNext(new Node(value));
+      last.getNext().setPrev(last);
       last = last.getNext();
     }
     length++;
@@ -80,13 +107,16 @@ public class MyLinkedList {
     else if (index == 0) {
       Node newNode = new Node (value);
       newNode.setNext(first);
+      first.setPrev(newNode);
       first = newNode;
       length++;
     }
     else {
       Node newNode = new Node (value);
       newNode.setNext(getNode(index));
-      getNode(index-1).setNext(newNode);
+      newNode.setPrev(newNode.getNext().getPrev());
+      newNode.getPrev().setNext(newNode);
+      newNode.getNext().setPrev(newNode);
       length++;
     }
   }
