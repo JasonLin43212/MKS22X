@@ -3,10 +3,7 @@ public class MyLinkedList {
   public static void main(String[]args) {
     MyLinkedList l = new MyLinkedList();
     l.setPrint(true);
-    l.add(2);
-    l.add(25);
-    l.add(32);
-    l.add(4);
+    System.out.println(l);
     System.out.println(l);
   }
 
@@ -42,12 +39,14 @@ public class MyLinkedList {
     return nodeAt.getValue();
   }
 
-  public void set(int index, Integer newValue) {
+  public Integer set(int index, Integer newValue) {
     if (index >= length || index < 0) {
       throw new IndexOutOfBoundsException();
     }
     Node nodeAt = getNode(index);
+    Integer oldValue = nodeAt.getValue();
     nodeAt.setValue(newValue);
+    return oldValue;
   }
 
 
@@ -72,7 +71,7 @@ public class MyLinkedList {
   }
 
   public void add(int index, Integer value) {
-    if (index < 0 || index > length) {
+    if (index < 0 || index > size()) {
       throw new IndexOutOfBoundsException();
     }
     if (index == size()) {
@@ -108,15 +107,46 @@ public class MyLinkedList {
     canPrint = value;
   }
 
-  public Integer indexOf(int value) {
+  public Integer indexOf(Integer value) {
     Node current = first;
     for (int i=0; i<size(); i++){
-      if (current.getValue() == value) {
+      if (current.getValue().equals(value)) {
         return i;
       }
       current = current.getNext();
     }
     return -1;
+  }
+
+  public boolean remove(int index) {
+    if (index < 0 || index >= size()){
+      throw new IndexOutOfBoundsException();
+    }
+    if (index == 0){
+      first = first.getNext();
+      //first.setPrev(null);
+    }
+    else if (index == size() -1){
+      last = getNode(index-1);
+      last.setNext(null);
+    }
+    else {
+      Node previousNode = getNode(index-1);
+      previousNode.setNext(previousNode.getNext().getNext());
+    }
+    length--;
+    return true;
+  }
+
+  public boolean remove(Integer value) {
+    Node current = first;
+    for (int i=0; i<size(); i++){
+      if (current.getValue().equals(value)){
+        return remove(i);
+      }
+      current = current.getNext();
+    }
+    return false;
   }
 
   /******************************
