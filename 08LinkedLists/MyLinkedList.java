@@ -3,7 +3,7 @@ public class MyLinkedList {
   public static void main(String[]args) {
     MyLinkedList l = new MyLinkedList();
     l.setPrint(true);
-    l.toggleSuper(true);
+    //l.toggleSuper(true);
     l.add(2);
     System.out.println(l);
     l.add(3);
@@ -12,7 +12,7 @@ public class MyLinkedList {
     System.out.println(l);
     l.add(2,29);
     System.out.println(l);
-    l.remove(new Integer(29));
+    System.out.println(l.remove(3));
     System.out.println(l);
   }
 
@@ -152,10 +152,11 @@ public class MyLinkedList {
     return -1;
   }
 
-  public boolean remove(int index) {
+  public Integer remove(int index) {
     if (index < 0 || index >= size()){
       throw new IndexOutOfBoundsException();
     }
+    Integer oldValue = getNode(index).getValue();
     if (index == 0){
       first = first.getNext();
       first.setPrev(null);
@@ -170,14 +171,15 @@ public class MyLinkedList {
       previousNode.getNext().setPrev(previousNode);
     }
     length--;
-    return true;
+    return oldValue;
   }
 
   public boolean remove(Integer value) {
     Node current = first;
     for (int i=0; i<size(); i++){
       if (current.getValue().equals(value)){
-        return remove(i);
+        remove(i);
+        return true;
       }
       current = current.getNext();
     }
