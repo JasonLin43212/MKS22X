@@ -1,20 +1,20 @@
 import java.util.Iterator;
 
-public class MyLinkedListImproved<T> implements Iterable<T> {
+public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T> {
 
   public static void main(String[]args) {
     MyLinkedListImproved<Integer> l = new MyLinkedListImproved<>();
     l.add(Integer.valueOf(3));
     l.add(Integer.valueOf(5));
     l.add(Integer.valueOf(7));
-    l.add(Integer.valueOf(12));
+    l.add(Integer.valueOf(-212));
     l.add(Integer.valueOf(1));
     l.add(Integer.valueOf(-23));
 
     for (Integer i : l){
       System.out.println(i);
     }
-
+    l.clear();
     System.out.println(l);
     System.out.println(l.max());
   }
@@ -196,17 +196,37 @@ public class MyLinkedListImproved<T> implements Iterable<T> {
   }
 
     public int max() {
+	if (size() == 0){
+	    return -1;
+	}
 	int maxIndex = 0;
 	Node current = first.getNext();
 	T maxValue = first.getValue();
 	for (int i=1; i<length; i++){
-	    if (current.getValue().compareTo(maxValue)) {
+	    if (current.getValue().compareTo(maxValue)>0) {
 		maxIndex = i;
 		maxValue = current.getValue();
 	    }
 	    current = current.getNext();
 	}
         return maxIndex;
+    }
+
+    public int min() {
+	if (size() == 0){
+	    return -1;
+	}
+	int minIndex = 0;
+	Node current = first.getNext();
+	T minValue = first.getValue();
+	for (int i=1; i<length; i++){
+	    if (current.getValue().compareTo(minValue)<0) {
+		minIndex = i;
+		minValue = current.getValue();
+	    }
+	    current = current.getNext();
+	}
+        return minIndex;
     }
   /******************************
              Node Class
