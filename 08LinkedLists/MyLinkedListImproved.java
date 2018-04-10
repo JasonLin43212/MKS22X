@@ -14,6 +14,9 @@ public class MyLinkedListImproved<T> implements Iterable<T> {
     for (Integer i : l){
       System.out.println(i);
     }
+
+    System.out.println(l);
+    System.out.println(l.max());
   }
 
   private Node first,last;
@@ -191,6 +194,20 @@ public class MyLinkedListImproved<T> implements Iterable<T> {
   public LinkedListIterator iterator() {
     return new LinkedListIterator(first);
   }
+
+    public int max() {
+	int maxIndex = 0;
+	Node current = first.getNext();
+	T maxValue = first.getValue();
+	for (int i=1; i<length; i++){
+	    if (current.getValue().compareTo(maxValue)) {
+		maxIndex = i;
+		maxValue = current.getValue();
+	    }
+	    current = current.getNext();
+	}
+        return maxIndex;
+    }
   /******************************
              Node Class
    ******************************/
