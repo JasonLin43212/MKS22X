@@ -1,8 +1,19 @@
-public class MyLinkedListImproved<T> {
+import java.util.Iterator;
+
+public class MyLinkedListImproved<T> implements Iterable<T> {
 
   public static void main(String[]args) {
-      // MyLinkedList l = new MyLinkedList();
-    
+    MyLinkedListImproved<Integer> l = new MyLinkedListImproved<>();
+    l.add(Integer.valueOf(3));
+    l.add(Integer.valueOf(5));
+    l.add(Integer.valueOf(7));
+    l.add(Integer.valueOf(12));
+    l.add(Integer.valueOf(1));
+    l.add(Integer.valueOf(-23));
+
+    for (Integer i : l){
+      System.out.println(i);
+    }
   }
 
   private Node first,last;
@@ -130,7 +141,7 @@ public class MyLinkedListImproved<T> {
     last = null;
   }
 
-  public T indexOf(T value) {
+  public int indexOf(T value) {
     Node current = first;
     for (int i=0; i<size(); i++){
       if (current.getValue().equals(value)) {
@@ -148,7 +159,9 @@ public class MyLinkedListImproved<T> {
     T oldValue = getNode(index).getValue();
     if (index == 0){
       first = first.getNext();
-      first.setPrev(null);
+      if (length > 1) {
+        first.setPrev(null);
+      }
     }
     else if (index == size() - 1){
       last = getNode(index-1);
@@ -175,6 +188,9 @@ public class MyLinkedListImproved<T> {
     return false;
   }
 
+  public LinkedListIterator iterator() {
+    return new LinkedListIterator(first);
+  }
   /******************************
              Node Class
    ******************************/
@@ -199,5 +215,28 @@ public class MyLinkedListImproved<T> {
     public void setNext(Node newNext) {next = newNext;}
     public void setPrev(Node newPrev) {prev = newPrev;}
     public void setValue(T newValue) {data = newValue;}
+  }
+
+    /******************************
+             Iterator Class
+   ******************************/
+
+  private class LinkedListIterator implements Iterator<T>{
+
+    private Node nextNode;
+
+    public LinkedListIterator(Node first) {
+      nextNode = first;
+    }
+
+    public boolean hasNext() {
+      return !(nextNode == null);
+    }
+
+    public T next() {
+      T result = nextNode.getValue();
+      nextNode = nextNode.getNext();
+      return result;
+    }
   }
 }
