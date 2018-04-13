@@ -6,11 +6,13 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
     MyLinkedListImproved<Integer> l = new MyLinkedListImproved<>();
     MyLinkedListImproved<Integer> m = new MyLinkedListImproved<>();
 
-    System.out.println(l);
-    System.out.println(m);
+
     m.add(Integer.valueOf(3));
     m.add(Integer.valueOf(4));
     l.add(Integer.valueOf(9));
+    l.add(Integer.valueOf(912));
+    System.out.println(l);
+    System.out.println(m);
     l.extend(m);
     System.out.println(l);
     System.out.println(m);
