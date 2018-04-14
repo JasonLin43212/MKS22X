@@ -4,34 +4,46 @@ public class Sorts{
 
   public static void main(String[]args) {
     MyLinkedListImproved<Integer> l = new MyLinkedListImproved<>();
-    l.add(22);
-    l.add(231);
-    l.add(13);
-    l.add(2);
-    l.add(382);
-    l.add(422);
-    l.add(423);
+    l.add(0);
+    l.add(0);
+    l.add(-392);
+    l.add(23);
     System.out.println(l);
     Sorts.radixsort(l);
     System.out.println(l);
   }
 
   public static void radixsort(MyLinkedListImproved<Integer> data) {
-    @SuppressWarnings("unchecked")
-    MyLinkedListImproved<Integer>[] ary = new MyLinkedListImproved[10];
-    for (int i=0; i<ary.length; i++){
-      ary[i] = new MyLinkedListImproved<Integer>();
+    if (data.size() == 0){
+      return;
     }
-    int numDigitsMax = (data.get(data.max())+"").length();
+    @SuppressWarnings("unchecked")
+    MyLinkedListImproved<Integer>[] aryPositive = new MyLinkedListImproved[10];
+    @SuppressWarnings("unchecked")
+    MyLinkedListImproved<Integer>[] aryNegative = new MyLinkedListImproved[10];
+    for (int i=0; i<10; i++){
+      aryPositive[i] = new MyLinkedListImproved<Integer>();
+      aryNegative[i] = new MyLinkedListImproved<Integer>();
+    }
+    int minNum = Math.abs(data.get(data.min()));
+    int maxNum = Math.abs(data.get(data.max()));
+    int numDigitsMax = (Math.max(minNum,maxNum)+"").length();
     for (int i=0; i<numDigitsMax; i++){
       for (Integer current : data){
-        ary[findDigit(current,i)].add(current);
+        if (current < 0){
+          aryNegative[9+findDigit(current,i)].add(current);
+        }
+        else {
+          aryPositive[findDigit(current,i)].add(current);
+        }
       }
       data.clear();
-      for (int k=0; k<ary.length; k++){
-	  data.extend(ary[k]);
+      for (int k=0; k<10; k++){
+        data.extend(aryNegative[k]);
       }
-      
+      for (int k=0; k<10; k++){
+        data.extend(aryPositive[k]);
+      }
     }
   }
 
