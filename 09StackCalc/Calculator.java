@@ -1,9 +1,9 @@
 import java.util.*;
 
-public class Eval{
+public class Calculator{
 
   public static void main(String[]args){
-    System.out.println(Eval.eval("10 2.0 -"));
+    System.out.println(Calculator.eval("10 2.0 -"));
   }
 
   public static double eval(String s){
@@ -28,9 +28,8 @@ public class Eval{
     }
     tokens[tokenIndex] = current;
 
-    System.out.println(Arrays.toString(tokens));
     @SuppressWarnings("unchecked")
-    Stack<Double> values = new Stack();
+      Stack<Double> values = new Stack();
     for (int i=0; i<tokens.length; i++){
       if (tokens[i].equals("+")){
         values.push(values.pop() + values.pop());
@@ -54,5 +53,31 @@ public class Eval{
     }
     return values.pop();
   }
+
+  public static class Stack<T>{
+    public LinkedList<T> l;
+
+    @SuppressWarnings("unchecked")
+    public Stack(){
+      l = new LinkedList();
+    }
+
+    public void push(T value){
+      l.add(value);
+    }
+
+    public T pop() {
+      return l.remove(l.size()-1);
+    }
+
+    public String toString() {
+      String output = "";
+      for (T val: l){
+        output += val + "\n";
+      }
+      return output;
+    }
+  }
+
 
 }
