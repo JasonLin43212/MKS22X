@@ -4,21 +4,24 @@ public class MyDeque<E>{
 
   public static void main(String[]args){
     MyDeque<Integer> d = new MyDeque<>();
-    d.addLast(23);
-    d.addLast(32);
-    d.addLast(232);
+    d.addFirst(78);
     System.out.println(d);
-
+    d.addFirst(12);
+    d.addFirst(89);
+    d.addFirst(123);
+    d.addFirst(12);
+    d.addFirst(89);
+    d.addFirst(12);
+    d.addFirst(89);
+    System.out.println(d);
     d.removeLast();
     System.out.println(d);
     d.removeLast();
+    System.out.println(d);
+    d.addLast(66);
+    d.addLast(123);
+    System.out.println(d);
 
-    System.out.println(d);
-    d.removeLast();
-    System.out.println(d);
-
-    d.addLast(321);
-    System.out.println(d);
   }
 
   public E[] data;
@@ -64,6 +67,8 @@ public class MyDeque<E>{
       newArr[i] = data[(i+front)%data.length];
     }
     data = newArr;
+    front = 0;
+    back = size-1;
   }
 
   public void addLast(E value) {
@@ -81,10 +86,30 @@ public class MyDeque<E>{
     E cur = data[back];
     data[back] = null;
     if (size > 1){
-      back--;
+      if (back == 0){
+        back = data.length - 1;
+      }
+      else {
+        back--;
+      }
     }
     size--;
     return cur;
   }
 
+  public void addFirst(E value){
+    if (size == data.length){
+      resize();
+    }
+    if (size != 0){
+      if (front == 0){
+        front = data.length-1;
+      }
+      else {
+        front = (front-1) % data.length;
+      }
+    }
+    data[front] = value;
+    size++;
+  }
 }
