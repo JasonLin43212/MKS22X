@@ -7,15 +7,17 @@ public class MyDeque<E>{
     d.addLast(23);
     d.addLast(32);
     d.addLast(232);
-    d.addLast(23);
-    d.addLast(32);
-    d.addLast(232);
-    d.addLast(23);
-    d.addLast(32);
-    d.addLast(232);
-    d.addLast(23);
-    d.addLast(32);
-    d.addLast(232);
+    System.out.println(d);
+
+    d.removeLast();
+    System.out.println(d);
+    d.removeLast();
+
+    System.out.println(d);
+    d.removeLast();
+    System.out.println(d);
+
+    d.addLast(321);
     System.out.println(d);
   }
 
@@ -78,7 +80,9 @@ public class MyDeque<E>{
   public E removeLast() {
     E cur = data[back];
     data[back] = null;
-    back--;
+    if (size > 1){
+      back--;
+    }
     size--;
     return cur;
   }
