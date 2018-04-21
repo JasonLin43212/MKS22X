@@ -3,25 +3,12 @@ import java.util.*;
 public class MyDeque<E>{
 
   public static void main(String[]args){
-    MyDeque<Integer> d = new MyDeque<>();
-    d.addFirst(78);
-    System.out.println(d);
+    MyDeque<Integer> d = new MyDeque<>(4);
     d.addFirst(12);
-    d.addFirst(89);
-    d.addFirst(123);
-    d.addFirst(12);
-    d.addFirst(89);
-    d.addFirst(12);
-    d.addFirst(89);
     System.out.println(d);
-    d.removeLast();
+    System.out.println(d.getFirst());
+    System.out.println(d.getLast());
     System.out.println(d);
-    d.removeLast();
-    System.out.println(d);
-    d.addLast(66);
-    d.addLast(123);
-    System.out.println(d);
-
   }
 
   public E[] data;
@@ -72,6 +59,9 @@ public class MyDeque<E>{
   }
 
   public void addLast(E value) {
+    if (value == null){
+      throw new NullPointerException();
+    }
     if (size == data.length){
       resize();
     }
@@ -83,33 +73,56 @@ public class MyDeque<E>{
   }
 
   public E removeLast() {
+    if (size < 1) {
+      throw new NoSuchElementException();
+    }
     E cur = data[back];
     data[back] = null;
     if (size > 1){
-      if (back == 0){
-        back = data.length - 1;
-      }
-      else {
-        back--;
-      }
+      back = (back-1+data.length) % data.length;
     }
     size--;
     return cur;
   }
 
   public void addFirst(E value){
+    if (value == null){
+      throw new NullPointerException();
+    }
     if (size == data.length){
       resize();
     }
     if (size != 0){
-      if (front == 0){
-        front = data.length-1;
-      }
-      else {
-        front = (front-1) % data.length;
-      }
+        front = (front-1+data.length) % data.length;
     }
     data[front] = value;
     size++;
+  }
+
+  public E removeFirst(){
+    if (size < 1) {
+      throw new NoSuchElementException();
+    }
+    E cur = data[front];
+    data[front] = null;
+    if (size > 1){
+      front = (front+1) % data.length;
+    }
+    size--;
+    return cur;
+  }
+
+  public E getFirst() {
+    if (size < 1) {
+      throw new NoSuchElementException();
+    }
+    return data[front];
+  }
+
+  public E getLast() {
+    if (size < 1) {
+      throw new NoSuchElementException();
+    }
+    return data[back];
   }
 }
