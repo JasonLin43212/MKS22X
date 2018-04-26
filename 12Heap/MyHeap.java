@@ -16,6 +16,28 @@ public class MyHeap{
     h.add("hd");
     h.add("kkcs");
     System.out.println(h);
+    System.out.println(h.remove());
+    System.out.println(h);
+    System.out.println(h.remove());
+    System.out.println(h);
+    System.out.println(h.remove());
+    System.out.println(h);
+    System.out.println(h.remove());
+    System.out.println(h);
+    System.out.println(h.remove());
+    System.out.println(h);
+    System.out.println(h.remove());
+    System.out.println(h);
+    System.out.println(h.remove());
+    System.out.println(h);
+    System.out.println(h.remove());
+    System.out.println(h);
+    System.out.println(h.remove());
+    System.out.println(h);
+    System.out.println(h.remove());
+    System.out.println(h);
+    System.out.println(h.remove());
+    System.out.println(h);
   }
 
   private String[] data;
@@ -83,12 +105,41 @@ public class MyHeap{
     size++;
   }
 
+  public String remove() {
+    if (size == 0){
+      return "";
+    }
+    String removedElem = peek();
+    data[0] = data[size-1];
+    pushDown(0);
+    size--;
+    return removedElem;
+  }
+
   private void pushUp(int index){
     int parentIndex = (index-1)/2;
     if (isMax && data[index].compareTo(data[parentIndex]) > 0 ||
         !isMax && data[index].compareTo(data[parentIndex]) < 0){
       swap(index,parentIndex);
       pushUp(parentIndex);
+    }
+  }
+
+  private void pushDown(int index){
+    int childL = 2*index + 1;
+    int childR = 2*index + 2;
+    if (childL >= size || childR >= size){
+      return;
+    }
+    if (isMax && data[index].compareTo(data[childL]) < 0 ||
+        !isMax && data[index].compareTo(data[childL]) > 0){
+      swap(index,childL);
+      pushDown(childL);
+    }
+    else if (isMax && data[index].compareTo(data[childR]) < 0 ||
+             !isMax && data[index].compareTo(data[childR]) > 0){
+      swap(index,childR);
+      pushDown(childR);
     }
   }
 
