@@ -1,46 +1,16 @@
 import java.util.*;
 
-public class MyHeap{
+public class MyHeap<T extends Comparable<T>>{
 
   public static void main(String[]args){
-    MyHeap h = new MyHeap(true);
-    h.add("hello");
-    h.add("hi");
-    h.add("ha");
-    h.add("boi");
-    h.add("zej");
-    h.add("leo");
-    h.add("blue");
-    h.add("pops");
-    h.add("lpae");
-    h.add("hd");
-    h.add("kkcs");
-    System.out.println(h);
-    System.out.println(h.remove());
-    System.out.println(h);
-    System.out.println(h.remove());
-    System.out.println(h);
-    System.out.println(h.remove());
-    System.out.println(h);
-    System.out.println(h.remove());
-    System.out.println(h);
-    System.out.println(h.remove());
-    System.out.println(h);
-    System.out.println(h.remove());
-    System.out.println(h);
-    System.out.println(h.remove());
-    System.out.println(h);
-    System.out.println(h.remove());
-    System.out.println(h);
-    System.out.println(h.remove());
-    System.out.println(h);
-    System.out.println(h.remove());
-    System.out.println(h);
-    System.out.println(h.remove());
+    MyHeap<Integer> h = new MyHeap<Integer>();
+    h.add(5);
+    h.add(99);
+    h.remove();
     System.out.println(h);
   }
 
-  private String[] data;
+  private T[] data;
   private int size;
   private boolean isMax;
 
@@ -48,6 +18,7 @@ public class MyHeap{
     this(true);
   }
 
+  @SuppressWarnings("unchecked")
   public MyHeap (boolean val) {
     if (val) {
       isMax = true;
@@ -55,7 +26,7 @@ public class MyHeap{
     else {
       isMax = false;
     }
-    data = new String[10];
+    data = (T[]) new Comparable[10];
     size = 0;
   }
 
@@ -74,24 +45,25 @@ public class MyHeap{
     return size;
   }
 
+  @SuppressWarnings("unchecked")
   private void resize() {
-    String[] newData = new String[size*2];
+    T[] newData = (T[]) new Comparable[size*2];
     for (int i=0; i<data.length; i++){
       newData[i] = data[i];
     }
     data = newData;
   }
 
-  public String peek(){
+  public T peek(){
     if (size == 0){
-      return "";
+      return null;
     }
     else {
       return data[0];
     }
   }
 
-  public void add(String s) {
+  public void add(T s) {
     if (size == data.length){
       resize();
     }
@@ -105,11 +77,11 @@ public class MyHeap{
     size++;
   }
 
-  public String remove() {
+  public T remove() {
     if (size == 0){
-      return "";
+      return null;
     }
-    String removedElem = peek();
+    T removedElem = peek();
     data[0] = data[size-1];
     pushDown(0);
     size--;
@@ -144,7 +116,7 @@ public class MyHeap{
   }
 
   private void swap(int index1, int index2){
-    String temp = data[index1];
+    T temp = data[index1];
     data[index1] = data[index2];
     data[index2] = temp;
   }
