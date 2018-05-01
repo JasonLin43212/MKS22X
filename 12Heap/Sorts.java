@@ -3,7 +3,7 @@ import java.util.*;
 public class Sorts{
 
   public static void main(String[]args){
-    int[] ary = {2,5,1,3,7,9};
+    int[] ary = {1, 1, 2, 2, 3, 4, 7, 9, 23, 53,6};
     Sorts.heapsort(ary);
     System.out.println(Arrays.toString(ary));
   }
