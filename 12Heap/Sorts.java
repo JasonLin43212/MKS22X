@@ -3,16 +3,14 @@ import java.util.*;
 public class Sorts{
 
   public static void main(String[]args){
-    int[] ary = {1, 1, 2, 2, 3, 4, 7, 9, 23, 53,6};
+    int[] ary = {1, 1, 2, 2, 3, 4, 7, 9, 23, 53};
     Sorts.heapsort(ary);
     System.out.println(Arrays.toString(ary));
   }
 
   public static void heapsort(int[] ary){
-    for (int i=ary.length; i>=0; i--){
-      if (i*2+1 < ary.length){
-        pushDown(i,ary,ary.length);
-      }
+    for (int i=ary.length-1; i>=0; i--){
+      pushDown(i,ary,ary.length);
     }
     System.out.println(Arrays.toString(ary));
 
@@ -36,7 +34,7 @@ public class Sorts{
   public static void pushDown(int index, int[] data, int size){
     int childL = 2*index + 1;
     int childR = 2*index + 2;
-    if (childL >= size || childR >= size){
+    if (childL >= size) {
       return;
     }
     if (data[index] < data[childL] && data[childL] > data[childR]){
