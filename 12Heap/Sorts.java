@@ -3,7 +3,7 @@ import java.util.*;
 public class Sorts{
 
   public static void main(String[]args){
-    int[] ary = {1, 1, 2, 2, 3, 4, 7, 9, 23, 53};
+    int[] ary = {9,4,3,1,2,5,7,4,453,432,6,3,4,35,42,-4343,-123};
     Sorts.heapsort(ary);
     System.out.println(Arrays.toString(ary));
   }
@@ -31,20 +31,21 @@ public class Sorts{
     }
   }
 
-  public static void pushDown(int index, int[] data, int size){
+  private static void pushDown(int index, int[] data, int size){
     int childL = 2*index + 1;
     int childR = 2*index + 2;
-    if (childL >= size) {
+    int swapIndex = index;
+    if (childL < size && data[swapIndex] < data[childL]){
+      swapIndex = childL;
+    }
+    if (childR < size && data[swapIndex] < data[childR]){
+      swapIndex = childR;
+    }
+    if (swapIndex == index){
       return;
     }
-    if (data[index] < data[childL] && data[childL] > data[childR]){
-      swap(index,childL,data);
-      pushDown(childL,data,size);
-    }
-    else if (data[index] < data[childR] && data[childR] > data[childL]){
-      swap(index,childR,data);
-      pushDown(childR,data,size);
-    }
+    swap(index,swapIndex,data);
+    pushDown(swapIndex,data,size);
   }
 
   public static void swap(int index1, int index2, int[]data){
