@@ -4,10 +4,18 @@ public class MyHeap<T extends Comparable<T>>{
 
   public static void main(String[]args){
     MyHeap<Integer> h = new MyHeap<Integer>();
-    h.add(5);
-    h.add(99);
+    h.add(12);
+     System.out.println(h);
+    h.add(23);
+     System.out.println(h);
+    h.add(72);
+     System.out.println(h);
+ h.add(15);
+  System.out.println(h);
     h.remove();
-    System.out.println(h);
+ System.out.println(h);
+    h.add(13);
+     System.out.println(h);
   }
 
   private T[] data;
@@ -83,8 +91,8 @@ public class MyHeap<T extends Comparable<T>>{
     }
     T removedElem = peek();
     data[0] = data[size-1];
-    pushDown(0);
     size--;
+    pushDown(0);
     return removedElem;
   }
 
@@ -103,13 +111,13 @@ public class MyHeap<T extends Comparable<T>>{
     if (childL >= size || childR >= size){
       return;
     }
-    if (isMax && data[index].compareTo(data[childL]) < 0 ||
-        !isMax && data[index].compareTo(data[childL]) > 0){
+    if (isMax && data[index].compareTo(data[childL]) < 0 && data[childL].compareTo(data[childR]) > 0 ||
+        !isMax && data[index].compareTo(data[childL]) > 0 && data[childL].compareTo(data[childR]) < 0){
       swap(index,childL);
       pushDown(childL);
     }
-    else if (isMax && data[index].compareTo(data[childR]) < 0 ||
-             !isMax && data[index].compareTo(data[childR]) > 0){
+    else if (isMax && data[index].compareTo(data[childR]) < 0 && data[childR].compareTo(data[childL]) > 0 ||
+             !isMax && data[index].compareTo(data[childR]) > 0 && data[childR].compareTo(data[childL]) > 0){
       swap(index,childR);
       pushDown(childR);
     }
