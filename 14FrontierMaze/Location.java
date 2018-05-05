@@ -8,6 +8,15 @@ public class Location{
     previous = prev;
   }
 
-  public getX(){return x;}
-  public getY(){return y;}
+  public int getX(){return x;}
+  public int getY(){return y;}
+  public Location getPrev(){return previous;}
+
+  public boolean equals(Location other){
+    return x == other.getX() && y == other.getY();
+  }
+
+  public String toString(){
+    return "(" + x + "," + y + ")";
+  }
 }
