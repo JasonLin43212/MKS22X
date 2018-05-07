@@ -1,10 +1,11 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class MazeSolver{
 
   public static void main(String[]args){
     MazeSolver m = new MazeSolver("test1.txt");
     System.out.println(m);
+    m.setAnimate(true);
     m.solve();
     System.out.println(m);
   }
@@ -12,11 +13,24 @@ public class MazeSolver{
   private Maze maze;
   private Frontier frontier;
   private boolean hasAttempted;
+  private boolean willAnimate;
 
   public MazeSolver(String fileName){
     maze = new Maze(fileName);
+    willAnimate = false;
   }
 
+  private void wait(int millis){
+    try {
+      Thread.sleep(millis);
+    }
+    catch (InterruptedException e) {
+    }
+  }
+
+  public void setAnimate(boolean val){
+    willAnimate = val;
+  }
   //Default to BFS
   public boolean solve(){ return solve(0); }
 
@@ -40,17 +54,24 @@ public class MazeSolver{
     //  add all the locations to the frontier
     //when there are no more values in the frontier return false
     while (frontier.hasNext()){
-      Location[] newLocations = maze.getNeighbors(frontier.next());
+      if (willAnimate){
+        System.out.println("\033[2J\033[1;1H");
+        System.out.println(this);
+        wait(30);
+      }
+      Location next = frontier.next();
+      maze.set(next.getX(),next.getY(),'.');
+      Location[] newLocations = maze.getNeighbors(next);
       for (int i=0; i<newLocations.length; i++){
         Location cur = newLocations[i];
         if (cur != null){
-          maze.set(cur.getX(),cur.getY(),'.');
           if (cur.equals(end)){
             maze.end = new Location(maze.end.getX(),maze.end.getY(),cur.getPrev());
             maze.set(maze.getEnd().getX(),maze.getEnd().getY(),'E');
             return true;
           }
           frontier.add(cur);
+          maze.set(cur.getX(),cur.getY(),'?');
         }
       }
     }
@@ -62,6 +83,11 @@ public class MazeSolver{
     while (cur!=null){
       maze.set(cur.getX(),cur.getY(),'@');
       cur = cur.getPrev();
+      if (willAnimate){
+        System.out.println("\033[2J\033[1;1H");
+        System.out.println(maze.colorize(maze.toString()));
+        wait(30);
+      }
     }
     maze.set(maze.start.getX(),maze.start.getY(),'S');
     return maze.colorize(maze.toString());
