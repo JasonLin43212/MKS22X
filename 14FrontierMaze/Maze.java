@@ -15,6 +15,7 @@ public class Maze{
     YOU MUST COMPLETE THIS METHOD!!!
   */
   public Location[] getNeighbors(Location L){
+
     Location[] neighbors = new Location[4];
     int x = L.getX();
     int y = L.getY();
