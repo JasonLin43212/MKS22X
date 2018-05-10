@@ -5,10 +5,21 @@ public class RunningMedian{
   public static void main(String[]args){
     RunningMedian r = new RunningMedian();
     //System.out.println(r);
-    r.add(9.4);
-    r.add(23.9);
-    r.add(12.0);
-    r.add(54.1);
+    r.add(3.0);
+    System.out.println(r);
+    r.add(5.0);
+    System.out.println(r);
+    r.add(1.0);
+    System.out.println(r);
+    r.add(32.0);
+    System.out.println(r);
+    r.add(32.0);
+    System.out.println(r);
+    r.add(32.0);
+    System.out.println(r);
+    r.add(32.0);
+    System.out.println(r);
+    r.add(90.0);
     System.out.println(r);
   }
 
@@ -44,9 +55,15 @@ public class RunningMedian{
   public void add(Double value){
     if (size == 0 || value.compareTo(getMedian()) > 0){
       min.add(value);
+      System.out.println("added " + value + " to min");
+      if (size != 0){
+        System.out.println(this);
+      }
+
     }
     else {
       max.add(value);
+      System.out.println("added " + value + " to max");
     }
     if (Math.abs(max.size()-min.size()) > 1){
       resize();
@@ -61,9 +78,11 @@ public class RunningMedian{
   private void resize(){
     if (max.size()>min.size()){
       min.add(max.remove());
+      System.out.println("removed " + min.peek() + " from max and moved to min");
     }
-    else {
+    else if (min.size() > max.size()) {
       max.add(min.remove());
+      System.out.println("removed " + max.peek() + " from min and moved to max");
     }
   }
 

@@ -21,19 +21,19 @@ public class Maze{
     int y = L.getY();
     int size = 0;
     if (isValid(x-1,y)){
-      neighbors[size] = new Location(x-1,y,L);
+      neighbors[size] = new Location(x-1,y,L,Math.abs(x-1-end.getX())+Math.abs(y-end.getY()));
       size++;
     }
     if (isValid(x+1,y)){
-      neighbors[size] = new Location(x+1,y,L);
+      neighbors[size] = new Location(x+1,y,L,Math.abs(x+1-end.getX())+Math.abs(y-end.getY()));
       size++;
     }
     if (isValid(x,y-1)){
-      neighbors[size] = new Location(x,y-1,L);
+      neighbors[size] = new Location(x,y-1,L,Math.abs(x-end.getX())+Math.abs(y-1-end.getY()));
       size++;
     }
     if (isValid(x,y+1)){
-      neighbors[size] = new Location(x,y+1,L);
+      neighbors[size] = new Location(x,y+1,L,Math.abs(x-end.getX())+Math.abs(y+1-end.getY()));
       size++;
     }
     return neighbors;
@@ -115,8 +115,8 @@ public class Maze{
       The start/end Locations may need more information later when we add
       other kinds of frontiers!
     */
-    end = new Location(endr,endc,null);
-    start = new Location(startr,startc,null);
+    end = new Location(endr,endc,null,0);
+    start = new Location(startr,startc,null,0);
   }
 
   public String toStringColor(){

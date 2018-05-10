@@ -3,18 +3,16 @@ import java.util.*;
 public class MyHeap<T extends Comparable<T>>{
 
   public static void main(String[]args){
-    MyHeap<Integer> h = new MyHeap<Integer>();
-    h.add(12);
-     System.out.println(h);
-    h.add(23);
-     System.out.println(h);
-    h.add(72);
-     System.out.println(h);
- h.add(15);
-  System.out.println(h);
+    MyHeap<Integer> h = new MyHeap<Integer>(false);
+    h.add(3);
     h.remove();
- System.out.println(h);
-    h.add(13);
+    h.add(5);
+    h.add(32);
+    h.add(32);
+    h.add(32);
+    h.add(32);
+    h.remove();
+    h.add(90);
      System.out.println(h);
   }
 
@@ -108,19 +106,33 @@ public class MyHeap<T extends Comparable<T>>{
   private void pushDown(int index){
     int childL = 2*index + 1;
     int childR = 2*index + 2;
-    if (childL >= size || childR >= size){
-      return;
+    if (childL >= size){return;}
+    if (childR >= size){
+      if (canPushDown(index,childL)){
+        swap(index,childL);
+        pushDown(childL);
+      }
     }
-    if (isMax && data[index].compareTo(data[childL]) < 0 && data[childL].compareTo(data[childR]) > 0 ||
-        !isMax && data[index].compareTo(data[childL]) > 0 && data[childL].compareTo(data[childR]) < 0){
-      swap(index,childL);
-      pushDown(childL);
+    else if (canPushDown(index,childL)){
+      if (hasPriorityOver(childL,childR)){
+        swap(index,childL);
+        pushDown(childL);
+      }
+      else {
+       swap(index,childR);
+       pushDown(childR);
+      }
     }
-    else if (isMax && data[index].compareTo(data[childR]) < 0 && data[childR].compareTo(data[childL]) > 0 ||
-             !isMax && data[index].compareTo(data[childR]) > 0 && data[childR].compareTo(data[childL]) > 0){
-      swap(index,childR);
-      pushDown(childR);
-    }
+  }
+
+  public boolean canPushDown(int parent, int child){
+    return isMax && data[parent].compareTo(data[child]) < 0 ||
+      !isMax && data[parent].compareTo(data[child]) > 0;
+  }
+
+  public boolean hasPriorityOver(int child1, int child2){
+    return isMax && data[child1].compareTo(data[child2]) >= 0 ||
+      !isMax && data[child1].compareTo(data[child2]) <= 0;
   }
 
   private void swap(int index1, int index2){
