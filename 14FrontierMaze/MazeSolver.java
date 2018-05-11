@@ -32,7 +32,7 @@ public class MazeSolver{
     willAnimate = val;
   }
   //Default to BFS
-  public boolean solve(){ return solve(2); }
+  public boolean solve(){ return solve(0); }
 
   //mode: required to allow for alternate solve modes.
   //0: BFS
@@ -61,7 +61,6 @@ public class MazeSolver{
       if (willAnimate){
         System.out.println("\033[2J\033[1;1H");
         System.out.println(this);
-        System.out.println(frontier.toString() + "hi");
         wait(30);
       }
       Location next = frontier.next();
