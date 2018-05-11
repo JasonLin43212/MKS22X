@@ -32,7 +32,7 @@ public class MazeSolver{
     willAnimate = val;
   }
   //Default to BFS
-  public boolean solve(){ return solve(0); }
+  public boolean solve(){ return solve(1); }
 
   //mode: required to allow for alternate solve modes.
   //0: BFS
