@@ -12,8 +12,6 @@ public class Sorts{
     for (int i=ary.length-1; i>=0; i--){
       pushDown(i,ary,ary.length);
     }
-    System.out.println(Arrays.toString(ary));
-
     for (int i=0; i<ary.length; i++){
       int maxValue = ary[0];
       int sortedIndex = ary.length-1-i;
