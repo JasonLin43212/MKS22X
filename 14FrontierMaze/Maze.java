@@ -8,6 +8,7 @@ public class Maze{
   private static final String SHOW_CURSOR =  "\033[?25h";
   Location start,end;
   private char[][]maze;
+  private boolean aStar;
 
   /*
     YOU MUST COMPLETE THIS METHOD!!!
@@ -20,20 +21,24 @@ public class Maze{
     int x = L.getX();
     int y = L.getY();
     int size = 0;
+    int newDistance = 0;
+    if (aStar){
+      newDistance = L.getSoFar()+1;
+    }
     if (isValid(x-1,y)){
-      neighbors[size] = new Location(x-1,y,L,Math.abs(x-1-end.getX())+Math.abs(y-end.getY()));
+      neighbors[size] = new Location(x-1,y,L,Math.abs(x-1-end.getX())+Math.abs(y-end.getY()),newDistance);
       size++;
     }
     if (isValid(x+1,y)){
-      neighbors[size] = new Location(x+1,y,L,Math.abs(x+1-end.getX())+Math.abs(y-end.getY()));
+      neighbors[size] = new Location(x+1,y,L,Math.abs(x+1-end.getX())+Math.abs(y-end.getY()),newDistance);
       size++;
     }
     if (isValid(x,y-1)){
-      neighbors[size] = new Location(x,y-1,L,Math.abs(x-end.getX())+Math.abs(y-1-end.getY()));
+      neighbors[size] = new Location(x,y-1,L,Math.abs(x-end.getX())+Math.abs(y-1-end.getY()),newDistance);
       size++;
     }
     if (isValid(x,y+1)){
-      neighbors[size] = new Location(x,y+1,L,Math.abs(x-end.getX())+Math.abs(y+1-end.getY()));
+      neighbors[size] = new Location(x,y+1,L,Math.abs(x-end.getX())+Math.abs(y+1-end.getY()),newDistance);
       size++;
     }
     return neighbors;
@@ -115,8 +120,9 @@ public class Maze{
       The start/end Locations may need more information later when we add
       other kinds of frontiers!
     */
-    end = new Location(endr,endc,null,0);
-    start = new Location(startr,startc,null,0);
+    end = new Location(endr,endc,null,0,0);
+    start = new Location(startr,startc,null,0,0);
+    aStar = false;
   }
 
   public String toStringColor(){
@@ -184,5 +190,9 @@ public class Maze{
       ans += line+color(37,40)+"\n";
     }
     return ans;
+  }
+
+  public void setAStar(boolean value){
+    aStar = value;
   }
 }

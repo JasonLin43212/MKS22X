@@ -32,12 +32,13 @@ public class MazeSolver{
     willAnimate = val;
   }
   //Default to BFS
-  public boolean solve(){ return solve(1); }
+  public boolean solve(){ return solve(3); }
 
   //mode: required to allow for alternate solve modes.
   //0: BFS
   //1: DFS
   //2: Best-First Search
+  //3: A Star
   public boolean solve(int mode){
     //initialize your frontier
     if (mode == 1){
@@ -48,6 +49,10 @@ public class MazeSolver{
     }
     else if (mode == 2){
       frontier = new FrontierPriorityQueue();
+    }
+    else if (mode == 3){
+      frontier = new FrontierPriorityQueue();
+      maze.setAStar(true);
     }
     frontier.add(maze.getStart());
     Location end = maze.getEnd();
@@ -61,6 +66,7 @@ public class MazeSolver{
       if (willAnimate){
         System.out.println("\033[2J\033[1;1H");
         System.out.println(this);
+        System.out.println(frontier);
         wait(30);
       }
       Location next = frontier.next();
@@ -70,7 +76,7 @@ public class MazeSolver{
         Location cur = newLocations[i];
         if (cur != null){
           if (cur.equals(end)){
-            maze.end = new Location(maze.end.getX(),maze.end.getY(),cur.getPrev(),0);
+            maze.end = new Location(maze.end.getX(),maze.end.getY(),cur.getPrev(),0,0);
             maze.set(maze.getEnd().getX(),maze.getEnd().getY(),'E');
             return true;
           }

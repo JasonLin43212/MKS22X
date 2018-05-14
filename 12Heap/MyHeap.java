@@ -4,16 +4,20 @@ public class MyHeap<T extends Comparable<T>>{
 
   public static void main(String[]args){
     MyHeap<Integer> h = new MyHeap<Integer>(false);
-    h.add(3);
+    //[44,44,44,46,44,46,44,46,46,46,46]
+    h.add(44);
+    h.add(44);
+    h.add(44);
+    h.add(46);
+    h.add(44);
+    h.add(46);
+    h.add(44);
+    h.add(46);
+    h.add(46);
+    h.add(46);
+    h.add(46);
     h.remove();
-    h.add(5);
-    h.add(32);
-    h.add(32);
-    h.add(32);
-    h.add(32);
-    h.remove();
-    h.add(90);
-     System.out.println(h);
+    System.out.println(h);
   }
 
   private T[] data;
@@ -122,6 +126,10 @@ public class MyHeap<T extends Comparable<T>>{
        swap(index,childR);
        pushDown(childR);
       }
+    }
+    else if (canPushDown(index,childR)){
+      swap(index,childR);
+      pushDown(childR);
     }
   }
 
