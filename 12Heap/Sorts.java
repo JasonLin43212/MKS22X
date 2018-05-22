@@ -3,7 +3,7 @@ import java.util.*;
 public class Sorts{
 
   public static void main(String[]args){
-    int[] ary = {9,4,3,1,2,5,7,4,453,432,6,3,4,35,42,-4343,-123};
+    int[] ary = {1,2,3,4,5};
     Sorts.heapsort(ary);
     System.out.println(Arrays.toString(ary));
   }
@@ -32,18 +32,35 @@ public class Sorts{
   private static void pushDown(int index, int[] data, int size){
     int childL = 2*index + 1;
     int childR = 2*index + 2;
-    int swapIndex = index;
-    if (childL < size && data[swapIndex] < data[childL]){
-      swapIndex = childL;
+    if (childL >= size){return;}
+    if (childR >= size){
+      if (canPushDown(index,childL,data)){
+        swap(index,childL,data);
+        pushDown(childL,data,size);
+      }
     }
-    if (childR < size && data[swapIndex] < data[childR]){
-      swapIndex = childR;
+    else if (canPushDown(index,childL,data)){
+      if (hasPriorityOver(childL,childR,data)){
+        swap(index,childL,data);
+        pushDown(childL,data,size);
+      }
+      else {
+        swap(index,childR,data);
+        pushDown(childR,data,size);
+      }
     }
-    if (swapIndex == index){
-      return;
+    else if (canPushDown(index,childR,data)){
+      swap(index,childR,data);
+      pushDown(childR,data,size);
     }
-    swap(index,swapIndex,data);
-    pushDown(swapIndex,data,size);
+  }
+
+  public static boolean canPushDown(int parent, int child, int[] data){
+    return data[parent] < data[child];
+  }
+
+  public static boolean hasPriorityOver(int child1, int child2, int[] data){
+    return data[child1] >= data[child2];
   }
 
   public static void swap(int index1, int index2, int[]data){
