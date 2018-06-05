@@ -149,12 +149,11 @@ public class Maze{
       char c =  maze[row][col];
       ans+=c;
       if( col == maxc-1 ){
-        ans += "\r";
         ans += "\n";
       }
 
     }
-    return ans;
+    return ans + "\n";
   }
 
   public char get(int row,int col){
