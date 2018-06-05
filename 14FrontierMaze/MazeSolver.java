@@ -3,11 +3,10 @@ import java.util.*;
 public class MazeSolver{
 
   public static void main(String[]args){
-    MazeSolver m = new MazeSolver("test1.txt");
-    System.out.println(m);
-    m.setAnimate(true);
+    MazeSolver m = new MazeSolver("data1.dat");
+    m.setAnimate(false);
     m.solve();
-    System.out.println(m);
+    System.out.println(m.toString());
   }
 
   private Maze maze;
@@ -32,7 +31,7 @@ public class MazeSolver{
     willAnimate = val;
   }
   //Default to BFS
-  public boolean solve(){ return solve(0); }
+  public boolean solve(){ return solve(1); }
 
   //mode: required to allow for alternate solve modes.
   //0: BFS
@@ -99,6 +98,6 @@ public class MazeSolver{
       }
     }
     maze.set(maze.start.getX(),maze.start.getY(),'S');
-    return maze.colorize(maze.toString());
+    return maze.toString();
   }
 }
